@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<!--
+  Prototype for issue #23 ("Decide 'Working in an existing project'
+  section's sample workflow narrative"), child of the wayfinder map
+  issue #2. No real project exists for this section, so this is a
+  fabricated narrated transcript of an agent dropped into a small,
+  generic, fictional legacy web app ("Riverside Ticketing"), working
+  through the 5-step workflow the map settled on:
+    1. Agent asks questions about the project and the requested change.
+    2. Context builds via back-and-forth (not one-shot).
+    3. Agent writes an AGENT.md capturing core project knowledge.
+    4. Agent proposes a plan; human reviews/adjusts before code changes.
+    5. Code review happens after implementation.
+  Three structurally different variants of how to *present* that same
+  story, switchable via ?variant= and the floating pill below.
+  Plain HTML/CSS/JS, no framework, no build step, no libraries.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Prototype: Working in an existing project — sample transcript</title>
+<style>
+  :root {
+    --bg: #0d0f12;
+    --panel: #14171b;
+    --ink: #e8e6df;
+    --dim: #8b8f96;
+    --accent: #d98a3d;
+    --human: #4f8cff;
+    --agent: #4fd6a8;
+    --note: #d9c23d;
+    --rule: #262a30;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  header.page {
+    padding: 28px 32px 18px;
+    border-bottom: 1px solid var(--rule);
+  }
+  header.page h1 {
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  header.page p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--dim);
+    max-width: 68ch;
+  }
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 32px 140px;
+  }
+  .stage { display: none; }
+  .stage.active { display: block; }
+
+  /* --- shared transcript primitives --- */
+  .beat {
+    margin: 0 0 28px;
+  }
+  .beat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+  .line {
+    display: grid;
+    grid-template-columns: 84px 1fr;
+    gap: 14px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .who { color: var(--dim); font-size: 12px; padding-top: 2px; }
+  .who.human { color: var(--human); }
+  .who.agent { color: var(--agent); }
+  .msg { white-space: pre-wrap; }
+  .msg code, .msg pre {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 13px;
+  }
+  .msg pre {
+    display: block;
+    padding: 10px 12px;
+    overflow-x: auto;
+    margin: 8px 0 0;
+  }
+  .file-card {
+    border: 1px solid var(--rule);
+    background: var(--panel);
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-top: 8px;
+    font-size: 13px;
+    white-space: pre-wrap;
+  }
+  .file-card .path {
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .note {
+    border-left: 3px solid var(--note);
+    background: rgba(217, 194, 61, 0.08);
+    padding: 8px 12px;
+    margin: 10px 0 0 98px;
+    font-size: 12.5px;
+    color: var(--note);
+  }
+
+  /* --- Variant C annotation rail --- */
+  .annotated .line { grid-template-columns: 84px 1fr 220px; }
+  .annotated .callout {
+    font-size: 11.5px;
+    color: var(--dim);
+    border-left: 2px solid var(--rule);
+    padding-left: 10px;
+  }
+  .annotated .callout strong { color: var(--ink); }
+
+  /* --- switcher --- */
+  .switcher {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    z-index: 10;
+  }
+  .switcher button {
+    background: transparent;
+    border: none;
+    color: var(--ink);
+    font-size: 16px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .switcher button:hover { background: var(--rule); }
+  .switcher .label {
+    font-size: 12px;
+    color: var(--dim);
+    min-width: 210px;
+    text-align: center;
+  }
+  .switcher .label b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Prototype — not production. Ticket #23.</h1>
+  <p>
+    Three ways to present the same fabricated session: an agent dropped into
+    "Riverside Ticketing," a small, messy, fictional internal support-ticket
+    app (Express + jQuery + SQLite, one 1,200-line <code>routes.js</code>,
+    no tests), asked to add status filtering + CSV export.
+  </p>
+</header>
+
+<main>
+
+  <!-- ================= VARIANT A: CONCISE ================= -->
+  <section id="A" class="stage">
+    <div class="beat">
+      <p class="beat-label">1 · Ask about the project and the change</p>
+      <div class="line"><div class="who human">human</div><div class="msg">Add status filtering + CSV export to the tickets list.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Before I touch anything — is this repo's <code>routes.js</code> the only place request handling lives, or is there a service layer I'm missing? And can every user export, or only admins?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Just routes.js, it's all in there. Regular agents can only export their own tickets; admins can export everyone's.</div></div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">2 · Build context</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Reading <code>routes.js</code>, <code>db/schema.sql</code>, <code>package.json</code>.</div></div>
+      <div class="file-card"><div class="path">routes.js:1</div>// 1,214 lines. No route-splitting. Sessions read from `req.session.role`.</div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">One more thing — <code>status</code> is stored as a free-text column, not an enum. What are the valid values in practice?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">open, pending, closed. There might be some old "Closed" / "CLOSED" junk from before we lowercased everything.</div></div>
+      <div class="note">Real dirty-data caveat surfaced by asking, not discovered later as a bug.</div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">3 · Write AGENT.md</p>
+      <div class="file-card">
+        <div class="path">AGENT.md (new)</div>
+# Riverside Ticketing
+
+Express + EJS + jQuery, SQLite via `better-sqlite3`. No test suite —
+verify manually against `db/seed.sqlite`.
+
+- All routes live in `routes.js` (1,200+ lines). Don't split it in
+  an unrelated PR; that's its own change.
+- Auth: `req.session.role` is `"admin"` or `"agent"`. No middleware
+  layer — every handler checks role inline.
+- `tickets.status` is free text, not an enum. Known dirty values:
+  `"Closed"`, `"CLOSED"` alongside `"closed"`. Always compare
+  case-insensitively.
+- CSV: no library vendored yet. Hand-rolling one is a comma/quote-
+  escaping bug waiting to happen — prefer a small, audited dependency.
+      </div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">4 · Plan → review</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Plan: (1) add <code>?status=</code> query param to <code>GET /tickets</code>, case-insensitive match; (2) add <code>GET /tickets/export.csv</code>, same filter, scoped by role; (3) vendor <code>json2csv</code>; (4) update the list view with a status dropdown + "Export CSV" link.</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Good, but make the export respect whatever filter is currently applied on screen — don't make it a separate unfiltered dump.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Updating: the export link carries the same <code>?status=</code> the list view currently has. Proceeding.</div></div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">5 · Code review</p>
+      <div class="line"><div class="who human">human</div><div class="msg">Reviewing the diff — the export route filters by role, but it's using <code>req.session.role === 'admin'</code> before checking <code>req.session.userId</code> is even set. If someone hits it logged out, that'll throw instead of 401.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Fixed — added the same auth guard the other routes use, before the role check.</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Approved.</div></div>
+    </div>
+  </section>
+
+  <!-- ================= VARIANT B: FULL REALISTIC DIALOGUE ================= -->
+  <section id="B" class="stage">
+    <div class="beat">
+      <p class="beat-label">1 · Ask about the project and the change</p>
+      <div class="line"><div class="who human">human</div><div class="msg">Hey — can you add a way to filter the tickets list by status, and export whatever's showing as a CSV? Support keeps asking for this.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Sure. A few things first so I don't guess wrong: this is my first time in this repo. What does "Riverside Ticketing" actually do day to day, and who are the two roles I'm seeing in the code — admin and agent?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">It's our internal tool for the support team. Agents handle tickets assigned to them; admins can see and manage everyone's.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Got it. And for the export — should an agent be able to export every ticket, or only the ones assigned to them?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Only their own. Admins get everything.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Makes sense — same boundary the list view already seems to enforce, from a quick skim of routes.js. I'll confirm that once I read it properly.</div></div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">2 · Build context</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Reading routes.js, db/schema.sql, package.json, and the view templates under views/tickets/.</div></div>
+      <div class="file-card">
+        <div class="path">routes.js (excerpt)</div>
+app.get('/tickets', (req, res) => {
+  const role = req.session.role;
+  const rows = role === 'admin'
+    ? db.prepare('SELECT * FROM tickets').all()
+    : db.prepare('SELECT * FROM tickets WHERE assignee_id = ?').all(req.session.userId);
+  res.render('tickets/list', { rows });
+});
+      </div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Confirmed — the ownership split matches what you described. Two follow-ups: the <code>status</code> column looks free-text, not a fixed enum. What values actually exist? And is there already a CSV-writing utility anywhere in the codebase, or would I be adding the first one?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Should be open / pending / closed. Nothing standardized though — you might find some old rows with "Closed" capitalized weird, from before we cleaned up the UI. And no, no CSV code anywhere, this'd be the first.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Good to know before I write the filter — I'll match case-insensitively so old rows don't silently disappear from results. For CSV, I'd rather bring in a small, well-used library than hand-roll comma/quote escaping myself; that's a classic place to introduce a subtle bug. Any objection to adding a dependency for this?</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">No objection, just keep it lightweight.</div></div>
+      <div class="note">The agent surfaced a real data-quality risk (dirty status casing) and a scope question (new dependency) before writing any code — both would've been awkward to discover mid-implementation or in review.</div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">3 · Write AGENT.md</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Before planning the change itself, I'm writing down what I've learned so the next person — human or agent — doesn't have to re-derive it.</div></div>
+      <div class="file-card">
+        <div class="path">AGENT.md (new)</div>
+# Riverside Ticketing
+
+Internal support-ticket tracker. Express + EJS server-rendered views +
+jQuery for interactivity, SQLite via `better-sqlite3`. No test suite —
+verify manually against the seeded dev DB.
+
+## Structure
+- All request handling lives in `routes.js` (1,200+ lines, no
+  sub-routers). Don't split it as a side effect of an unrelated
+  change — that refactor deserves its own PR.
+- Views: `views/tickets/*.ejs`, plain server-rendered HTML + jQuery,
+  no client framework.
+
+## Auth
+- `req.session.role` is `"admin"` or `"agent"`, checked inline in
+  each handler — there's no auth middleware layer yet.
+- Ownership rule used throughout: agents see/act on tickets where
+  `assignee_id = req.session.userId`; admins see/act on all tickets.
+  Any new ticket-scoped route must respect this split.
+
+## Data gotchas
+- `tickets.status` is a free-text column, not an enum or FK. Known
+  values in practice: `open`, `pending`, `closed`, plus legacy rows
+  with inconsistent casing (`Closed`, `CLOSED`). Always compare
+  case-insensitively until/unless the column is migrated to an enum.
+
+## Conventions
+- No CSV-writing utility exists yet — first one added should be a
+  small, audited dependency, not hand-rolled escaping.
+      </div>
+      <div class="line"><div class="who human">human</div><div class="msg">That's useful even beyond this feature, thanks.</div></div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">4 · Plan → review</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Here's the plan before I write anything:</div></div>
+      <div class="file-card">
+        <div class="path">plan (proposed)</div>
+1. Add `?status=` query param to `GET /tickets`; filter case-insensitively;
+   keep the existing role-based ownership scoping unchanged.
+2. Add `GET /tickets/export.csv`, same filter + same ownership scoping.
+3. Add `json2csv` as a dependency for the export route.
+4. Update `views/tickets/list.ejs`: a status `&lt;select&gt;` that re-submits
+   the query param, and an "Export CSV" link.
+      </div>
+      <div class="line"><div class="who human">human</div><div class="msg">One change: the export link needs to carry whatever filter is currently applied on the page. I don't want people expecting a filtered export and getting everything.</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Good catch — updating step 4 so the export link's href includes the current <code>status</code> query param rather than linking to an unfiltered export. I'll hold off on writing code until you're happy with this version.</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">That's it, go ahead.</div></div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">5 · Code review</p>
+      <div class="line"><div class="who agent">agent</div><div class="msg">Implementation's up for review — diff touches routes.js, list.ejs, and package.json.</div></div>
+      <div class="line"><div class="who human">human</div><div class="msg">Looking at the export route — you check <code>req.session.role === 'admin'</code> to decide the query, but I don't see a check that <code>req.session.userId</code> exists at all first. What happens if someone hits this URL without a session?</div></div>
+      <div class="line"><div class="who agent">agent</div><div class="msg">That would throw instead of returning 401 — the other routes guard on session existence before the role check, and I missed matching that here. Fixing now.</div></div>
+      <div class="file-card">
+        <div class="path">routes.js (fix)</div>
+app.get('/tickets/export.csv', (req, res) => {
+  if (!req.session.userId) return res.sendStatus(401);
+  const role = req.session.role;
+  // ...unchanged filter logic
+});
+      </div>
+      <div class="line"><div class="who human">human</div><div class="msg">That matches the pattern everywhere else now. Approved — merge it.</div></div>
+    </div>
+  </section>
+
+  <!-- ================= VARIANT C: ANNOTATED / TEACHING ================= -->
+  <section id="C" class="stage annotated">
+    <div class="beat">
+      <p class="beat-label">1 · Ask about the project and the change</p>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">Add status filtering + CSV export to the tickets list.</div>
+        <div class="callout"></div>
+      </div>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg">Is <code>routes.js</code> the only place request handling lives? And can every user export, or only admins?</div>
+        <div class="callout"><strong>Why this matters:</strong> the agent asks about structure and access rules before reading code — cheap questions that would otherwise take longer to reverse-engineer, or be gotten wrong silently.</div>
+      </div>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">Just routes.js. Agents export only their own tickets; admins get everyone's.</div>
+        <div class="callout"></div>
+      </div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">2 · Build context</p>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg">Reads routes.js, db/schema.sql, the view templates.</div>
+        <div class="callout"></div>
+      </div>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg"><code>status</code> is free text, not an enum. What values exist in practice?</div>
+        <div class="callout"><strong>Why this matters:</strong> reading the code raised a new, sharper question. Context-building isn't one round — each answer can open the next question.</div>
+      </div>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">open / pending / closed, but some old rows have weird casing like "Closed".</div>
+        <div class="callout"><strong>Payoff:</strong> this dirty-data fact only surfaces because it was asked for directly — it wouldn't show up in a schema file.</div>
+      </div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">3 · Write AGENT.md</p>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg">Writes AGENT.md: stack, file layout, the auth-role split, the status-casing gotcha, the "no CSV utility yet" note.</div>
+        <div class="callout"><strong>Why this matters:</strong> on a greenfield project this doc gets written up front. On an existing project it gets written from what was just learned in steps 1–2 — same artifact, different moment.</div>
+      </div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">4 · Plan → review</p>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg">Proposes a 4-step plan: query param, export route, new dependency, UI control.</div>
+        <div class="callout"></div>
+      </div>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">The export needs to respect whatever filter is currently on screen.</div>
+        <div class="callout"><strong>Why this matters:</strong> the plan is reviewed and changed <em>before</em> code exists — cheaper to redirect a plan than a diff.</div>
+      </div>
+    </div>
+
+    <div class="beat">
+      <p class="beat-label">5 · Code review</p>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">The export route doesn't guard on session existence before checking role — that'll throw for a logged-out request instead of returning 401.</div>
+        <div class="callout"><strong>Why this matters:</strong> a real class of bug (missing auth guard), caught by a human reviewing a diff against the codebase's own established pattern — not caught by the agent, and not something tests would necessarily catch either, if this project had any.</div>
+      </div>
+      <div class="line">
+        <div class="who agent">agent</div>
+        <div class="msg">Fixed to match the guard pattern used elsewhere. Ready for another look.</div>
+        <div class="callout"></div>
+      </div>
+      <div class="line">
+        <div class="who human">human</div>
+        <div class="msg">Approved.</div>
+        <div class="callout"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="switcher">
+  <button id="prev" aria-label="Previous variant">&#8592;</button>
+  <span class="label" id="label"></span>
+  <button id="next" aria-label="Next variant">&#8594;</button>
+</div>
+
+<script>
+  const variants = [
+    { key: 'A', name: 'Concise' },
+    { key: 'B', name: 'Full realistic dialogue' },
+    { key: 'C', name: 'Annotated / teaching callouts' },
+  ];
+
+  function currentIndex() {
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('variant') || 'A';
+    const i = variants.findIndex(v => v.key === key);
+    return i === -1 ? 0 : i;
+  }
+
+  function render() {
+    const i = currentIndex();
+    const v = variants[i];
+    document.querySelectorAll('.stage').forEach(el => el.classList.remove('active'));
+    document.getElementById(v.key).classList.add('active');
+    document.getElementById('label').innerHTML = '<b>' + v.key + '</b> (' + v.name + ')';
+  }
+
+  function goTo(i) {
+    const wrapped = (i + variants.length) % variants.length;
+    const url = new URL(window.location);
+    url.searchParams.set('variant', variants[wrapped].key);
+    history.replaceState({}, '', url);
+    render();
+  }
+
+  document.getElementById('prev').addEventListener('click', () => goTo(currentIndex() - 1));
+  document.getElementById('next').addEventListener('click', () => goTo(currentIndex() + 1));
+
+  document.addEventListener('keydown', (e) => {
+    const tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (['INPUT', 'TEXTAREA'].includes(tag) || (document.activeElement && document.activeElement.isContentEditable)) return;
+    if (e.key === 'ArrowLeft') goTo(currentIndex() - 1);
+    if (e.key === 'ArrowRight') goTo(currentIndex() + 1);
+  });
+
+  render();
+</script>
+
+</body>
+</html>
