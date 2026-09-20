@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+  Ticket #23 resolution artifact, child of wayfinder map issue #2.
+  Merges the "Full realistic dialogue" depth (variant B) with the
+  "Annotated / teaching callouts" rail (variant C) from
+  existing-project-transcript.html, per the human's pick — and
+  re-characterizes the agent as less independently sharp, with the
+  human doing more of the steering/catching, per explicit direction:
+  "make the agent less intelligent, let human guide it more."
+  Same fictional app ("Riverside Ticketing") and change (status
+  filter + CSV export) as the earlier prototype, for continuity.
+  Plain HTML/CSS, no framework, no build step, no libraries.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Working in an existing project — sample transcript (final)</title>
+<style>
+  :root {
+    --bg: #0d0f12;
+    --panel: #14171b;
+    --ink: #e8e6df;
+    --dim: #8b8f96;
+    --accent: #d98a3d;
+    --human: #4f8cff;
+    --agent: #4fd6a8;
+    --note: #d9c23d;
+    --rule: #262a30;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); line-height: 1.5; }
+  header.page { padding: 28px 32px 18px; border-bottom: 1px solid var(--rule); }
+  header.page h1 { font-size: 15px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--dim); margin: 0 0 6px; font-weight: 600; }
+  header.page p { margin: 0; font-size: 13px; color: var(--dim); max-width: 70ch; }
+  main { max-width: 940px; margin: 0 auto; padding: 32px; }
+
+  .beat { margin: 0 0 28px; }
+  .beat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin: 0 0 10px; font-weight: 600; }
+  .line { display: grid; grid-template-columns: 84px 1fr 240px; gap: 14px; padding: 8px 0; font-size: 14px; }
+  .who { color: var(--dim); font-size: 12px; padding-top: 2px; }
+  .who.human { color: var(--human); }
+  .who.agent { color: var(--agent); }
+  .msg { white-space: pre-wrap; }
+  .msg code { background: var(--panel); border: 1px solid var(--rule); border-radius: 3px; padding: 1px 5px; font-size: 13px; }
+  .file-card { border: 1px solid var(--rule); background: var(--panel); border-radius: 4px; padding: 12px 14px; margin-top: 8px; font-size: 13px; white-space: pre-wrap; grid-column: 1 / 2 span; }
+  .file-card .path { color: var(--accent); margin-bottom: 6px; font-size: 12px; }
+  .callout { font-size: 11.5px; color: var(--dim); border-left: 2px solid var(--rule); padding-left: 10px; }
+  .callout strong { color: var(--ink); }
+  .callout.human-led { border-left-color: var(--human); }
+</style>
+</head>
+<body>
+
+<header class="page">
+  <h1>Working in an existing project — sample transcript (ticket #23, resolved)</h1>
+  <p>
+    "Riverside Ticketing," a small, messy, fictional internal support-ticket
+    app (Express + jQuery + SQLite, one 1,200-line <code>routes.js</code>,
+    no tests). Requested change: add status filtering + CSV export. The
+    agent is deliberately ordinary here, not exceptionally sharp — most of
+    the catches below come from the human actively steering and reviewing,
+    not from the agent anticipating everything on its own.
+  </p>
+</header>
+
+<main>
+
+  <div class="beat">
+    <p class="beat-label">1 · Ask about the project and the change</p>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Add status filtering + CSV export to the tickets list.</div>
+      <div class="callout"></div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Sure, I can add that. I'll take a look at the codebase and get started.</div>
+      <div class="callout"><strong>Why this matters:</strong> the agent's default move is to jump straight to implementation — it didn't ask who uses this or what the access rules are. Left alone, it would have built <em>something</em>, just not necessarily the right thing.</div>
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Hold on, don't start yet. Not everyone should be able to export everything — agents can only export their own tickets, admins get everyone's. Did you check who's using this and how before diving in?</div>
+      <div class="callout human-led"><strong>Human steers:</strong> the human stops the agent and volunteers the access-control rule unprompted, rather than waiting for the agent to ask a sharp question it wasn't going to ask.</div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">I hadn't gotten to permissions yet — good to know. I'll make sure export respects that split.</div>
+      <div class="callout"></div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <p class="beat-label">2 · Build context</p>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Reading routes.js. Looks like all the ticket routes live in one file, and I can filter by adding a `status` condition to the existing query.</div>
+      <div class="callout"><strong>Why this matters:</strong> the agent's read is surface-level — it found where to add the filter but didn't question the data itself.</div>
+    </div>
+    <div class="file-card">
+      <div class="path">routes.js (excerpt)</div>
+app.get('/tickets', (req, res) => {
+  const role = req.session.role;
+  const rows = role === 'admin'
+    ? db.prepare('SELECT * FROM tickets').all()
+    : db.prepare('SELECT * FROM tickets WHERE assignee_id = ?').all(req.session.userId);
+  res.render('tickets/list', { rows });
+});
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Before you wire up the filter — status is just a free-text column, not an enum. There's old data with weird casing, like "Closed" instead of "closed". If you match it exactly you'll silently drop rows.</div>
+      <div class="callout human-led"><strong>Human catches it:</strong> this is a real production landmine the agent didn't spot from the schema alone — it took the human, who knows the data's history, to flag it before code got written.</div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Got it, I'll compare case-insensitively then.</div>
+      <div class="callout"></div>
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Also — for the CSV part, don't hand-roll the writing yourself. I've seen comma/quote escaping bugs from homemade CSV code before. Just pull in a small, well-used library.</div>
+      <div class="callout human-led"><strong>Human guides again:</strong> a second unprompted correction — the agent hadn't raised the escaping risk on its own; it was heading toward the easy, riskier path.</div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Makes sense, I'll add <code>json2csv</code> as a dependency instead.</div>
+      <div class="callout"></div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <p class="beat-label">3 · Write AGENT.md</p>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Here's what I've written down so far.</div>
+      <div class="callout"></div>
+    </div>
+    <div class="file-card">
+      <div class="path">AGENT.md (draft)</div>
+# Riverside Ticketing
+
+Express + EJS + jQuery, SQLite via `better-sqlite3`. No test suite.
+
+- `tickets.status` is free text, not an enum. Compare case-insensitively —
+  legacy rows have inconsistent casing.
+- No CSV-writing utility exists yet; use a small audited dependency,
+  don't hand-roll escaping.
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">This is missing the access-control rule we just talked about, and there's nothing about routes.js being one giant file people shouldn't casually split. Add both — that's exactly the kind of thing the next person needs on day one.</div>
+      <div class="callout human-led"><strong>Human guides the doc itself:</strong> even the "core knowledge" artifact needed a nudge — the agent captured what it had just been told to fix, but not the standing structural facts nobody had mentioned yet.</div>
+    </div>
+    <div class="file-card">
+      <div class="path">AGENT.md (updated)</div>
+# Riverside Ticketing
+
+Express + EJS + jQuery, SQLite via `better-sqlite3`. No test suite.
+
+- All routes live in `routes.js` (1,200+ lines). Don't split it as a
+  side effect of an unrelated change.
+- Auth: `req.session.role` is `"admin"` or `"agent"`, checked inline
+  in each handler. Agents act only on tickets where
+  `assignee_id = req.session.userId`; admins act on all tickets. Any
+  new ticket-scoped route must respect this.
+- `tickets.status` is free text, not an enum. Compare case-insensitively —
+  legacy rows have inconsistent casing.
+- No CSV-writing utility exists yet; use a small audited dependency,
+  don't hand-roll escaping.
+    </div>
+  </div>
+
+  <div class="beat">
+    <p class="beat-label">4 · Plan → review</p>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Plan: (1) add `?status=` to the tickets list query, matched case-insensitively; (2) add a `/tickets/export.csv` route using `json2csv`; (3) add a status dropdown and an "Export CSV" link to the list view.</div>
+      <div class="callout"><strong>Why this matters:</strong> the plan is technically fine but incomplete — it never mentions the ownership scoping the human already established twice. It's an easy detail to drop between "decided" and "written down."</div>
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Two things: the export route needs the same admin/agent scoping as the list route — don't let it become an unfiltered admin-only assumption by accident. And the export link should carry whatever status filter is currently on screen, not export everything.</div>
+      <div class="callout human-led"><strong>Human reviews the plan, not just the diff:</strong> both corrections happen before any code exists — cheaper to redirect a plan than to unwind an implementation.</div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">Updating the plan: export route re-uses the exact same role/ownership branch as the list route, and its link carries the current `?status=` value. Proceeding with this version.</div>
+      <div class="callout"></div>
+    </div>
+  </div>
+
+  <div class="beat">
+    <p class="beat-label">5 · Code review</p>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">Looking at the diff — the export route checks `req.session.role === 'admin'` to decide the query, but there's no check that `req.session.userId` even exists first. What happens if someone hits this URL without a session?</div>
+      <div class="callout human-led"><strong>Human catches the real bug:</strong> a missing auth guard, found by comparing the new route against the codebase's own established pattern — not something the agent flagged itself, and not something tests would have caught either, since this project has none.</div>
+    </div>
+    <div class="line">
+      <div class="who agent">agent</div>
+      <div class="msg">You're right, that would throw instead of returning 401. Fixing it to match the guard the other routes use.</div>
+      <div class="callout"></div>
+    </div>
+    <div class="file-card">
+      <div class="path">routes.js (fix)</div>
+app.get('/tickets/export.csv', (req, res) => {
+  if (!req.session.userId) return res.sendStatus(401);
+  const role = req.session.role;
+  // ...unchanged filter logic
+});
+    </div>
+    <div class="line">
+      <div class="who human">human</div>
+      <div class="msg">That matches the pattern everywhere else now. Approved — merge it.</div>
+      <div class="callout"></div>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>
