@@ -44,7 +44,7 @@ const STAGES: Stage[] = [
   },
 ];
 
-export function mount(container: HTMLElement): () => void {
+export function mount(container: HTMLElement): void {
   let stageIndex = 0;
 
   container.innerHTML = `
@@ -122,9 +122,4 @@ export function mount(container: HTMLElement): () => void {
   stageButtons.forEach((btn, i) => btn.addEventListener("click", () => goTo(i)));
 
   render();
-
-  return () => {
-    // No timers/listeners outlive the container removal, but kept for
-    // symmetry with steps that do need teardown.
-  };
 }

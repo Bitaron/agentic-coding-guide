@@ -280,8 +280,6 @@ code.inline {
 /* ---------- Step: Traditional software building ---------- */
 
 .trad-intro {
-  font-size: 1.05rem;
-  line-height: 1.65;
   max-width: 62ch;
 }
 
@@ -382,30 +380,9 @@ code.inline {
   gap: 1rem;
 }
 
-.trad-controls button {
-  font-family: inherit;
-  font-size: 0.85rem;
-  padding: 8px 18px;
-  border: 1px solid #cabf9f;
-  background: transparent;
-  color: #171614;
-  cursor: pointer;
-}
-
-.trad-controls button:hover:not(:disabled) {
-  background: #ece6d9;
-}
-
-.trad-controls button:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
 /* ---------- Step: Token generation ---------- */
 
 .tok-intro {
-  font-size: 1.05rem;
-  line-height: 1.65;
   max-width: 62ch;
 }
 
@@ -466,25 +443,6 @@ code.inline {
   margin-bottom: 1.4rem;
 }
 
-.tok-controls button {
-  font-family: inherit;
-  font-size: 0.85rem;
-  padding: 8px 18px;
-  border: 1px solid #cabf9f;
-  background: transparent;
-  color: #171614;
-  cursor: pointer;
-}
-
-.tok-controls button:hover:not(:disabled) {
-  background: #ece6d9;
-}
-
-.tok-controls button:disabled {
-  opacity: 0.35;
-  cursor: default;
-}
-
 .tok-caption {
   font-size: 0.85rem;
   line-height: 1.55;
@@ -495,8 +453,6 @@ code.inline {
 /* ---------- Step: Stateless sessions ---------- */
 
 .stx-intro {
-  font-size: 1.05rem;
-  line-height: 1.65;
   max-width: 62ch;
   margin-bottom: 2rem;
 }
@@ -542,20 +498,6 @@ code.inline {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   opacity: 0.5;
-}
-
-.stx-reveal {
-  font-family: inherit;
-  font-size: 0.85rem;
-  padding: 8px 18px;
-  border: 1px solid #cabf9f;
-  background: transparent;
-  color: #171614;
-  cursor: pointer;
-}
-
-.stx-reveal:hover {
-  background: #ece6d9;
 }
 
 .stx-persisted {
@@ -605,7 +547,10 @@ code.inline {
   max-width: 62ch;
 }
 
-.step-nav button {
+.step-nav button,
+.trad-controls button,
+.tok-controls button,
+.stx-reveal {
   font-family: inherit;
   font-size: 0.85rem;
   padding: 8px 18px;
@@ -615,11 +560,16 @@ code.inline {
   cursor: pointer;
 }
 
-.step-nav button:hover:not(:disabled) {
+.step-nav button:hover:not(:disabled),
+.trad-controls button:hover:not(:disabled),
+.tok-controls button:hover:not(:disabled),
+.stx-reveal:hover {
   background: #ece6d9;
 }
 
-.step-nav button:disabled {
+.step-nav button:disabled,
+.trad-controls button:disabled,
+.tok-controls button:disabled {
   opacity: 0.35;
   cursor: default;
 }

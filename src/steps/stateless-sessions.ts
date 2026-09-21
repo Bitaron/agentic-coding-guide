@@ -4,7 +4,7 @@
 // variant — the brief's own "demonstrate the difference between [independent
 // sessions] and an app that adds persistence" framing.
 
-export function mount(container: HTMLElement): () => void {
+export function mount(container: HTMLElement): void {
   container.innerHTML = `
     <p class="stx-intro">A model session does not remember another,
       independent session. Each one starts from whatever context it is
@@ -70,6 +70,4 @@ export function mount(container: HTMLElement): () => void {
       ? "What if the app adds memory? →"
       : "← Hide the persisted variant";
   });
-
-  return () => {};
 }
