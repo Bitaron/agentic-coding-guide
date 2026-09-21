@@ -2146,6 +2146,103 @@ code.inline {
   max-width: 62ch;
 }
 
+/* ---------- Step: Frontend dev example ---------- */
+
+.fx-intro,
+.fx-lead {
+  max-width: 62ch;
+  margin-bottom: 1.4rem;
+}
+
+.fx-callout {
+  margin-bottom: 1.8rem;
+}
+
+.fx-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.fx-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 0 1.8rem;
+}
+
+.fx-flow-node {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  background: #ede7d8;
+}
+
+.fx-flow-arrow {
+  opacity: 0.4;
+  padding: 0.15rem 0 0.15rem 1.4rem;
+}
+
+/* Placeholder screenshot slots (issue #19's shell; issue #20 fills these
+   in). Dashed border + "Pending capture" tag keep them unmistakably
+   unfinished rather than quietly passing for real content. */
+
+.fx-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.fx-slot {
+  margin: 0;
+  max-width: 42rem;
+}
+
+.fx-slot-frame {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 9rem;
+  padding: 1.2rem 1.4rem;
+  border: 1.5px dashed #cabf9f;
+  background: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 10px,
+    #ede7d8 10px,
+    #ede7d8 11px
+  );
+}
+
+.fx-slot-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8a5a2b;
+  border: 1px solid #cabf9f;
+  background: #f7f5f0;
+  padding: 2px 8px;
+}
+
+.fx-slot-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  max-width: 36rem;
+}
+
+.fx-slot-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 0.6rem;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -2254,5 +2351,10 @@ code.inline {
 
   .gr-scroll-hint {
     display: block;
+  }
+
+  .fx-slot-frame {
+    min-height: 7rem;
+    padding: 1rem;
   }
 }
