@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI Coding Session</title>
+    <!--
+      GitHub Pages serves this for any unknown path (e.g. a direct load of
+      /intro/3). There is no server-side rewrite available on Pages, so this
+      re-encodes the real path into a query string and redirects to the app
+      root, where index.html's inline script decodes it back before the
+      router runs. Standard spa-github-pages redirect trick.
+      See docs/adr/0002-pushstate-routing-with-404-fallback.md.
+
+      pathSegmentsToKeep = 1: this is a project page served at
+      /AI-Coding-Session-Interactive-Teaching-Website/, so that one segment
+      must survive the redirect untouched.
+    -->
+    <script>
+      var pathSegmentsToKeep = 1;
+      var l = window.location;
+      l.replace(
+        l.protocol +
+          "//" +
+          l.hostname +
+          (l.port ? ":" + l.port : "") +
+          l.pathname
+            .split("/")
+            .slice(0, 1 + pathSegmentsToKeep)
+            .join("/") +
+          "/?/" +
+          l.pathname
+            .slice(1)
+            .split("/")
+            .slice(pathSegmentsToKeep)
+            .join("/")
+            .replace(/&/g, "~and~") +
+          (l.search ? "&" + l.search.slice(1).replace(/&/g, "~and~") : "") +
+          l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
