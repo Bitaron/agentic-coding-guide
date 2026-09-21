@@ -2146,6 +2146,132 @@ code.inline {
   max-width: 62ch;
 }
 
+/* ---------- Step: Backend dev example ---------- */
+
+.bx-intro,
+.bx-outro {
+  max-width: 62ch;
+  margin-bottom: 1.6rem;
+}
+
+.bx-source {
+  background: #ede7d8;
+  padding: 1.2rem 1.4rem;
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.bx-source-path {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-bottom: 0.6rem;
+}
+
+.bx-source-body {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.bx-shots {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+.bx-shot {
+  margin: 0;
+  max-width: 42rem;
+}
+
+.bx-shot-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.bx-shot-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  border: 1px solid #cabf9f;
+  padding: 2px 8px;
+}
+
+.bx-shot-time {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.bx-shot-frame {
+  display: block;
+  overflow: hidden;
+  border: 1px solid #e2dacb;
+  background: #171614;
+}
+
+.bx-shot-frame.crop-top,
+.bx-shot-frame.crop-bottom {
+  aspect-ratio: 1366 / 384;
+}
+
+.bx-shot-frame.crop-top .bx-shot-img {
+  object-position: top;
+}
+
+.bx-shot-frame.crop-bottom .bx-shot-img {
+  object-position: bottom;
+}
+
+.bx-shot-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bx-shot-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 0.7rem;
+}
+
+.bx-handoff {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  padding: 0.3rem 0;
+  max-width: 42rem;
+}
+
+.bx-handoff::before,
+.bx-handoff::after {
+  content: "";
+  flex: 1 0 1.5rem;
+  height: 1px;
+  background: #e2dacb;
+}
+
+.bx-handoff-arrow {
+  font-size: 0.9rem;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -2254,5 +2380,10 @@ code.inline {
 
   .gr-scroll-hint {
     display: block;
+  }
+
+  .bx-shot-meta {
+    flex-wrap: wrap;
+    gap: 0.4rem 0.8rem;
   }
 }
