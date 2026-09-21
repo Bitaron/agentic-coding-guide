@@ -345,7 +345,10 @@ code.inline {
   cursor: pointer;
 }
 
-.trad-stage-btn.current {
+.trad-stage-btn.current,
+.ctx-mix-btn.current,
+.sub-tree-child.current,
+.pr-tab.current {
   border-color: #1f8a56;
   color: #1f8a56;
   font-weight: 600;
@@ -538,6 +541,313 @@ code.inline {
   }
 }
 
+/* ---------- Step: Prompt ---------- */
+
+.pr-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.pr-tabs {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.pr-panel {
+  background: #ede7d8;
+  padding: 1.4rem 1.6rem;
+  max-width: 62ch;
+}
+
+.pr-prompt-label,
+.pr-result-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+
+.pr-prompt-text {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin: 0 0 1rem;
+}
+
+.pr-arrow {
+  opacity: 0.5;
+  margin-bottom: 1rem;
+}
+
+.pr-result-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pr-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 1.2rem;
+}
+
+/* ---------- Step: Context window ---------- */
+
+.ctx-intro {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.ctx-tree {
+  margin-bottom: 2.2rem;
+}
+
+.ctx-tree-root {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.ctx-tree-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-left: 1.4rem;
+  border-left: 2px solid #e2dacb;
+}
+
+.ctx-tree-branch {
+  font-size: 0.95rem;
+}
+
+.ctx-tree-branch-noisy {
+  color: #171614;
+}
+
+.ctx-tree-outcome {
+  font-size: 0.82rem;
+  color: #e8611e;
+  margin-top: 0.2rem;
+}
+
+.ctx-demo-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.ctx-mix-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.ctx-mix-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.ctx-bar-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+
+.ctx-bar {
+  display: flex;
+  height: 2.2rem;
+  background: #ede7d8;
+  overflow: hidden;
+}
+
+.ctx-bar-seg {
+  height: 100%;
+  transition: width 350ms ease;
+}
+
+.ctx-bar-useful {
+  background: #1f8a56;
+}
+
+.ctx-bar-expensive {
+  background: #cabf9f;
+}
+
+.ctx-bar-noisy {
+  background: #e8611e;
+}
+
+.ctx-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin: 0.7rem 0 1.6rem;
+  font-size: 0.78rem;
+}
+
+.ctx-legend-item {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.ctx-legend-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  width: 0.7em;
+  height: 0.7em;
+}
+
+.ctx-legend-useful::before {
+  background: #1f8a56;
+}
+
+.ctx-legend-expensive::before {
+  background: #cabf9f;
+}
+
+.ctx-legend-noisy::before {
+  background: #e8611e;
+}
+
+.ctx-effective {
+  font-size: 1.05rem;
+  margin-bottom: 1.6rem;
+}
+
+.ctx-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Agents ---------- */
+
+.ag-intro {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.ag-loop {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.8rem;
+}
+
+.ag-node {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8a8272;
+  padding: 0.35rem 0.8rem;
+  transition: color 250ms ease, background 250ms ease;
+}
+
+.ag-node.current {
+  color: #171614;
+  background: #ede7d8;
+}
+
+.ag-node.done {
+  color: #e8611e;
+}
+
+.ag-arrow {
+  opacity: 0.4;
+  padding-left: 0.8rem;
+}
+
+.ag-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.6rem;
+}
+
+.ag-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Sub-agents ---------- */
+
+.sub-intro {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.sub-tree {
+  margin-bottom: 2rem;
+}
+
+.sub-tree-root {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  background: #ede7d8;
+  margin-bottom: 1rem;
+}
+
+.sub-tree-children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding-left: 1.4rem;
+  border-left: 2px solid #e2dacb;
+}
+
+.sub-tree-child {
+  font-family: inherit;
+  font-size: 0.88rem;
+  padding: 9px 16px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.sub-panel {
+  max-width: 62ch;
+  min-height: 6.5rem;
+  margin-bottom: 1.6rem;
+}
+
+.sub-panel-heading {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+}
+
+.sub-panel-role {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.sub-reasons {
+  margin: 1rem 0 0;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -550,7 +860,10 @@ code.inline {
 .step-nav button,
 .trad-controls button,
 .tok-controls button,
-.stx-reveal {
+.stx-reveal,
+.pr-tab,
+.ag-controls button,
+.sub-reveal {
   font-family: inherit;
   font-size: 0.85rem;
   padding: 8px 18px;
@@ -563,13 +876,19 @@ code.inline {
 .step-nav button:hover:not(:disabled),
 .trad-controls button:hover:not(:disabled),
 .tok-controls button:hover:not(:disabled),
-.stx-reveal:hover {
+.stx-reveal:hover,
+.pr-tab:hover,
+.ag-controls button:hover:not(:disabled),
+.sub-reveal:hover,
+.ctx-mix-btn:hover,
+.sub-tree-child:hover {
   background: #ece6d9;
 }
 
 .step-nav button:disabled,
 .trad-controls button:disabled,
-.tok-controls button:disabled {
+.tok-controls button:disabled,
+.ag-controls button:disabled {
   opacity: 0.35;
   cursor: default;
 }
@@ -585,5 +904,13 @@ code.inline {
 
   .title-card h1 {
     margin-top: 3rem;
+  }
+
+  .pr-tabs {
+    flex-wrap: wrap;
+  }
+
+  .pr-panel {
+    padding: 1.1rem 1.2rem;
   }
 }
