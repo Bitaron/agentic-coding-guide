@@ -9,6 +9,13 @@ import { mount as mountPrompt } from "./steps/prompt";
 import { mount as mountContextWindow } from "./steps/context-window";
 import { mount as mountAgents } from "./steps/agents";
 import { mount as mountSubAgents } from "./steps/sub-agents";
+import { mount as mountSkills } from "./steps/skills";
+import { mount as mountHooks } from "./steps/hooks";
+import { mount as mountAgenticLoop } from "./steps/agentic-loop";
+import { mount as mountGraph } from "./steps/graph";
+import { mount as mountMemory } from "./steps/memory";
+import { mount as mountPlugins } from "./steps/plugins";
+import { mount as mountMcp } from "./steps/mcp";
 
 export interface Step {
   title: string;
@@ -103,9 +110,43 @@ export const sections: Section[] = [
         wide: true,
         mount: mountSubAgents,
       },
+      // Steps 12-18: the agentic toolbox's tooling/infra half. Built by
+      // issue #16.
+      {
+        title: "Skills",
+        wide: true,
+        mount: mountSkills,
+      },
+      {
+        title: "Hooks",
+        wide: true,
+        mount: mountHooks,
+      },
+      {
+        title: "Agentic loop",
+        wide: true,
+        mount: mountAgenticLoop,
+      },
+      {
+        title: "Graph",
+        wide: true,
+        mount: mountGraph,
+      },
+      {
+        title: "Memory",
+        mount: mountMemory,
+      },
+      {
+        title: "Plugins",
+        mount: mountPlugins,
+      },
+      {
+        title: "MCP",
+        mount: mountMcp,
+      },
       {
         title: "Coming soon",
-        body: "The rest of this section's steps are being written — see the Intro to AI tooling/infra (#16) and SE practices (#17) tickets.",
+        body: "The rest of this section's steps are being written — see the Intro to AI SE practices ticket (#17).",
       },
     ],
   },
