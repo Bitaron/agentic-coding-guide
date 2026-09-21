@@ -348,7 +348,10 @@ code.inline {
 .trad-stage-btn.current,
 .ctx-mix-btn.current,
 .sub-tree-child.current,
-.pr-tab.current {
+.pr-tab.current,
+.cmp-tab.current,
+.econ-stage-btn.current,
+.sel-scenario.current {
   border-color: #1f8a56;
   color: #1f8a56;
   font-weight: 600;
@@ -848,6 +851,503 @@ code.inline {
   max-width: 62ch;
 }
 
+/* ---------- Shared: callout, factor chain, data table ---------- */
+/* Reused across the model-landscape arc (steps 4-7) rather than redefined
+   per step, since each is the same visual component appearing more than
+   once: an emphasis box, an "inputs combine into one outcome" diagram, and
+   a plain comparison table. */
+
+.callout {
+  background: #ede7d8;
+  border-left: 3px solid #e8611e;
+  padding: 1.1rem 1.4rem;
+  margin: 1.6rem 0;
+  max-width: 62ch;
+}
+
+.callout-heading {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: 0 0 0.6rem;
+}
+
+.callout-body {
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.callout-list {
+  margin: 0 0 0.6rem;
+  padding-left: 1.2rem;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.callout-list:last-child {
+  margin-bottom: 0;
+}
+
+.callout-conclusion {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.factor-chain {
+  max-width: 30rem;
+  margin: 1.6rem 0 2rem;
+}
+
+.factor-chain-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.factor-chain-items li {
+  font-size: 0.95rem;
+  padding: 0.55rem 0.9rem;
+  background: #ede7d8;
+}
+
+.factor-chain-items li:not(:last-child) {
+  margin-bottom: 1.3rem;
+  position: relative;
+}
+
+.factor-chain-items li:not(:last-child)::after {
+  content: "+";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1.1rem;
+  text-align: center;
+  opacity: 0.45;
+  font-size: 0.85rem;
+}
+
+.factor-chain-arrow {
+  text-align: center;
+  opacity: 0.5;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.factor-chain-result {
+  font-weight: 700;
+  font-size: 1.02rem;
+  padding: 0.75rem 1rem;
+  background: #171614;
+  color: #f7f5f0;
+  text-align: center;
+}
+
+.data-table {
+  display: grid;
+  grid-template-columns: repeat(var(--data-cols, 3), 1fr);
+  border-top: 1px solid #e2dacb;
+  margin: 1.4rem 0 1.6rem;
+  max-width: 62ch;
+}
+
+.data-table-2col {
+  max-width: 26rem;
+}
+
+.data-row {
+  display: contents;
+}
+
+.data-cell {
+  padding: 0.7rem 0.9rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  border-bottom: 1px solid #e2dacb;
+}
+
+.data-cell:first-child {
+  font-weight: 600;
+}
+
+.data-row-head .data-cell {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  font-weight: 600;
+  border-bottom: 1px solid #cabf9f;
+}
+
+/* ---------- Step: Model categories & reasoning effort ---------- */
+
+.mc-intro {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.mc-dial-group {
+  margin-bottom: 1.8rem;
+}
+
+.mc-dial-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.7rem;
+}
+
+.mc-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.mc-category {
+  font-family: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+  min-width: 13rem;
+  flex: 1 1 13rem;
+}
+
+.mc-category:hover {
+  background: #ece6d9;
+}
+
+.mc-category.current {
+  border-color: #1f8a56;
+  background: #ede7d8;
+}
+
+.mc-category-name {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+}
+
+.mc-category-ref {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.mc-category.current .mc-category-ref {
+  color: #1f8a56;
+}
+
+.mc-category-role {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.mc-ladder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mc-rung {
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #8a8272;
+  cursor: pointer;
+}
+
+.mc-rung:hover {
+  background: #ece6d9;
+}
+
+.mc-rung.current {
+  color: #1f8a56;
+  border-color: #1f8a56;
+  font-weight: 700;
+}
+
+.mc-rung-arrow {
+  opacity: 0.4;
+  padding: 0.15rem 1rem;
+}
+
+.mc-readout {
+  font-size: 1rem;
+  max-width: 62ch;
+  margin: 0.4rem 0 1.8rem;
+}
+
+.mc-readout strong {
+  color: #1f8a56;
+}
+
+.mc-effects-lead {
+  max-width: 62ch;
+  margin-bottom: 0.4rem;
+}
+
+.mc-effects {
+  margin: 0 0 1.4rem;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.mc-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-bottom: 1.6rem;
+}
+
+/* ---------- Step: Cross-provider comparison ---------- */
+
+.cmp-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.cmp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.cmp-tab {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.cmp-panel {
+  max-width: 62ch;
+}
+
+.cmp-panel-lead {
+  margin-bottom: 1.2rem;
+}
+
+.cmp-panel-note {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0 0 1.2rem;
+}
+
+.cmp-panel-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  margin-top: 1rem;
+}
+
+.cmp-vendor {
+  margin-bottom: 1.4rem;
+}
+
+.cmp-vendor-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem;
+}
+
+.cmp-vendor-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- Step: Reasoning effort & token consumption ---------- */
+
+.econ-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.econ-stage-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.econ-stage-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.econ-panel {
+  max-width: 62ch;
+  min-height: 14rem;
+}
+
+.econ-stage-lead {
+  margin-bottom: 1.2rem;
+}
+
+.econ-tree {
+  margin-bottom: 1.6rem;
+}
+
+.econ-tree-root {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+
+.econ-tree-branches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-left: 1.4rem;
+  border-left: 2px solid #e2dacb;
+}
+
+.econ-tree-branch-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.econ-tree-leaves {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  opacity: 0.85;
+}
+
+.econ-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  margin-top: 1rem;
+}
+
+.econ-flows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.econ-flow {
+  flex: 1 1 16rem;
+}
+
+.econ-flow-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.6rem;
+}
+
+.econ-flow-steps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.econ-flow-step {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  background: #ede7d8;
+}
+
+.econ-flow-arrow {
+  opacity: 0.4;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.7rem;
+}
+
+.econ-flow-total {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+
+/* ---------- Step: Model selection ---------- */
+
+.sel-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.sel-dont {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.sel-do {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sel-scenario-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.sel-scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.sel-scenario {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.sel-scenario-panel {
+  max-width: 62ch;
+}
+
+.sel-scenario-arrow {
+  opacity: 0.4;
+  margin-bottom: 0.5rem;
+}
+
+.sel-scenario-result {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.7rem 1rem;
+  background: #ede7d8;
+  min-height: 1.6rem;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -881,7 +1381,10 @@ code.inline {
 .ag-controls button:hover:not(:disabled),
 .sub-reveal:hover,
 .ctx-mix-btn:hover,
-.sub-tree-child:hover {
+.sub-tree-child:hover,
+.cmp-tab:hover,
+.econ-stage-btn:hover,
+.sel-scenario:hover {
   background: #ece6d9;
 }
 
@@ -912,5 +1415,28 @@ code.inline {
 
   .pr-panel {
     padding: 1.1rem 1.2rem;
+  }
+
+  .data-table {
+    grid-template-columns: 1fr;
+  }
+
+  .data-row {
+    display: block;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #e2dacb;
+  }
+
+  .data-row-head {
+    display: none;
+  }
+
+  .data-cell {
+    padding: 0.15rem 0;
+    border-bottom: none;
+  }
+
+  .mc-category {
+    min-width: 0;
   }
 }

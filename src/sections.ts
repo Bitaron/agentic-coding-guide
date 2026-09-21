@@ -1,6 +1,10 @@
 import { mount as mountTraditionalDevelopment } from "./steps/traditional-development";
 import { mount as mountTokenGeneration } from "./steps/token-generation";
 import { mount as mountStatelessSessions } from "./steps/stateless-sessions";
+import { mount as mountModelCategories } from "./steps/model-categories";
+import { mount as mountProviderComparison } from "./steps/provider-comparison";
+import { mount as mountTokenEconomics } from "./steps/token-economics";
+import { mount as mountModelSelection } from "./steps/model-selection";
 import { mount as mountPrompt } from "./steps/prompt";
 import { mount as mountContextWindow } from "./steps/context-window";
 import { mount as mountAgents } from "./steps/agents";
@@ -56,26 +60,28 @@ export const sections: Section[] = [
         wide: true,
         mount: mountStatelessSessions,
       },
-      // Steps 4-7 (the model landscape arc, ProjectBrief.md §4.1-§4.8 minus
-      // §4.7 — merged into "Context window" below per issue #15) are
-      // tracked by issue #14 and not yet built. Four placeholder slots keep
-      // steps 8-11 below at their intended step numbers so this section's
-      // step count doesn't shift again once #14 lands.
+      // Steps 4-7: the model landscape arc, ProjectBrief.md §4.1-§4.8 minus
+      // §4.7 (merged into "Context window" below per issue #15). Built by
+      // issue #14.
       {
-        title: "Coming soon",
-        body: "This part of the model landscape arc is being written — see issue #14.",
+        title: "Model categories & reasoning effort",
+        wide: true,
+        mount: mountModelCategories,
       },
       {
-        title: "Coming soon",
-        body: "This part of the model landscape arc is being written — see issue #14.",
+        title: "Model categories across providers",
+        wide: true,
+        mount: mountProviderComparison,
       },
       {
-        title: "Coming soon",
-        body: "This part of the model landscape arc is being written — see issue #14.",
+        title: "Reasoning effort & token consumption",
+        wide: true,
+        mount: mountTokenEconomics,
       },
       {
-        title: "Coming soon",
-        body: "This part of the model landscape arc is being written — see issue #14.",
+        title: "Model selection as an engineering trade-off",
+        wide: true,
+        mount: mountModelSelection,
       },
       {
         title: "Prompt",
