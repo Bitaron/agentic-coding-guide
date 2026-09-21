@@ -1,6 +1,14 @@
 import { mount as mountTraditionalDevelopment } from "./steps/traditional-development";
 import { mount as mountTokenGeneration } from "./steps/token-generation";
 import { mount as mountStatelessSessions } from "./steps/stateless-sessions";
+import { mount as mountModelCategories } from "./steps/model-categories";
+import { mount as mountProviderComparison } from "./steps/provider-comparison";
+import { mount as mountTokenEconomics } from "./steps/token-economics";
+import { mount as mountModelSelection } from "./steps/model-selection";
+import { mount as mountPrompt } from "./steps/prompt";
+import { mount as mountContextWindow } from "./steps/context-window";
+import { mount as mountAgents } from "./steps/agents";
+import { mount as mountSubAgents } from "./steps/sub-agents";
 
 export interface Step {
   title: string;
@@ -52,9 +60,52 @@ export const sections: Section[] = [
         wide: true,
         mount: mountStatelessSessions,
       },
+      // Steps 4-7: the model landscape arc, ProjectBrief.md §4.1-§4.8 minus
+      // §4.7 (merged into "Context window" below per issue #15). Built by
+      // issue #14.
+      {
+        title: "Model categories & reasoning effort",
+        wide: true,
+        mount: mountModelCategories,
+      },
+      {
+        title: "Model categories across providers",
+        wide: true,
+        mount: mountProviderComparison,
+      },
+      {
+        title: "Reasoning effort & token consumption",
+        wide: true,
+        mount: mountTokenEconomics,
+      },
+      {
+        title: "Model selection as an engineering trade-off",
+        wide: true,
+        mount: mountModelSelection,
+      },
+      {
+        title: "Prompt",
+        wide: true,
+        mount: mountPrompt,
+      },
+      {
+        title: "Context window",
+        wide: true,
+        mount: mountContextWindow,
+      },
+      {
+        title: "Agents",
+        wide: true,
+        mount: mountAgents,
+      },
+      {
+        title: "Sub-agents",
+        wide: true,
+        mount: mountSubAgents,
+      },
       {
         title: "Coming soon",
-        body: "The rest of this section's steps are being written — see the Intro to AI content tickets.",
+        body: "The rest of this section's steps are being written — see the Intro to AI tooling/infra (#16) and SE practices (#17) tickets.",
       },
     ],
   },
