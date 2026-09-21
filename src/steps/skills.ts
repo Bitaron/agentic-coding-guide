@@ -4,8 +4,12 @@
 // the actual Skill structure from the repository." grill-me-with-doc.md,
 // grilling.md, and domain-modeling.md are quoted verbatim (frontmatter plus
 // an excerpt, trimmed for space and labelled as such) from skill/ in this
-// repo, not paraphrased or invented. The "used on this project" caption cites
-// only what's independently checkable in this repo's own history (PR #9, #21).
+// repo, not paraphrased or invented — including skill/grilling.md and
+// skill/domain-modeling.md's file *paths*, which on disk hold each other's
+// content (grilling.md's frontmatter name is "domain-modeling" and vice
+// versa; verified by reading both files directly, predates this ticket).
+// The "used on this project" caption cites only what's independently
+// checkable in this repo's own history (PR #9, #21).
 
 import { rootFlow } from "./shared";
 
@@ -31,7 +35,7 @@ const FILES: SkillFile[] = [
   },
   {
     id: "grilling",
-    path: "skill/grilling.md",
+    path: "skill/domain-modeling.md",
     frontmatter: {
       name: "grilling",
       description:
@@ -43,7 +47,7 @@ const FILES: SkillFile[] = [
   },
   {
     id: "domain-modeling",
-    path: "skill/domain-modeling.md",
+    path: "skill/grilling.md",
     frontmatter: {
       name: "domain-modeling",
       description:
