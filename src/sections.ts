@@ -20,6 +20,9 @@ import { mount as mountSpecification } from "./steps/specification";
 import { mount as mountAdr } from "./steps/adr";
 import { mount as mountTdd } from "./steps/tdd";
 import { mount as mountCodeReview } from "./steps/code-review";
+import { mount as mountBackendPlanning } from "./steps/backend-planning";
+import { mount as mountBackendStructure } from "./steps/backend-structure";
+import { mount as mountBackendHandoff } from "./steps/backend-handoff";
 
 export interface Step {
   title: string;
@@ -175,8 +178,19 @@ export const sections: Section[] = [
     label: "Backend dev example",
     steps: [
       {
-        title: "Coming soon",
-        body: "This section's steps are being written — see the Backend dev example ticket.",
+        title: "Planning & spec",
+        wide: true,
+        mount: mountBackendPlanning,
+      },
+      {
+        title: "Structural decisions",
+        wide: true,
+        mount: mountBackendStructure,
+      },
+      {
+        title: "The handoff, made literal",
+        wide: true,
+        mount: mountBackendHandoff,
       },
     ],
   },
