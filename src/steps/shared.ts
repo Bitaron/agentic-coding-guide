@@ -36,3 +36,17 @@ export function factorChain(ariaLabel: string, items: string[], result: string):
     </div>
   `;
 }
+
+/** A root box branching to a row of children — one package/parent naming
+ * several named pieces it provides (a skill calling other skills, a plugin
+ * bundling skills). Used by the Skills and Plugins steps. */
+export function rootFlow(ariaLabel: string, root: string, children: string[]): string {
+  return `
+    <div class="flow" role="img" aria-label="${ariaLabel}">
+      <div class="flow-root">${root}</div>
+      <div class="flow-children">
+        ${children.map((c) => `<div class="flow-child">${c}</div>`).join("")}
+      </div>
+    </div>
+  `;
+}

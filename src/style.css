@@ -1348,6 +1348,512 @@ code.inline {
   min-height: 1.6rem;
 }
 
+/* ---------- Shared: root→children flow ---------- */
+/* One package/parent naming several pieces it provides — used by the
+   Skills and Plugins steps (src/steps/shared.ts's rootFlow()). */
+
+.flow {
+  margin-bottom: 2rem;
+}
+
+.flow-root {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  background: #ede7d8;
+  margin-bottom: 1rem;
+}
+
+.flow-children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding-left: 1.4rem;
+  border-left: 2px solid #e2dacb;
+}
+
+.flow-child {
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.5rem 0.9rem;
+  border: 1px solid #cabf9f;
+  color: #171614;
+}
+
+/* ---------- Step: Skills ---------- */
+
+.sk-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.sk-lead {
+  max-width: 62ch;
+  margin-bottom: 1.2rem;
+}
+
+.sk-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.sk-tab {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.sk-panel {
+  background: #ede7d8;
+  padding: 1.2rem 1.4rem;
+  max-width: 62ch;
+  margin-bottom: 1.6rem;
+}
+
+.sk-file-path {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-bottom: 0.7rem;
+}
+
+.sk-file-frontmatter,
+.sk-file-body {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  margin: 0 0 0.9rem;
+}
+
+.sk-file-frontmatter {
+  opacity: 0.7;
+}
+
+.sk-file-note {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+.sk-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Hooks ---------- */
+
+.hk-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.hk-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.hk-nav-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.hk-pipeline {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.hk-stage {
+  background: #ede7d8;
+  padding: 0.9rem 1.2rem;
+  min-width: 9rem;
+}
+
+.hk-stage-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.4rem;
+}
+
+.hk-stage-value {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.hk-pipeline-arrow {
+  opacity: 0.45;
+  font-size: 1.1rem;
+}
+
+.hk-note {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 62ch;
+  min-height: 2.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.hk-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Agentic loop ---------- */
+
+.loop-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.loop-toggle {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.loop-toggle-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.loop-toggle-btn.current {
+  border-color: #1f8a56;
+  color: #1f8a56;
+  font-weight: 600;
+}
+
+.loop-stage {
+  margin-bottom: 1.6rem;
+  min-height: 9rem;
+}
+
+.loop-cycle {
+  position: relative;
+}
+
+.loop-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.loop-node {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #8a8272;
+  padding: 0.5rem 0.9rem;
+  background: #ede7d8;
+  transition: color 250ms ease, background 250ms ease;
+}
+
+.loop-node.current {
+  color: #171614;
+  background: #cfe9da;
+}
+
+.loop-node.done {
+  color: #e8611e;
+  background: transparent;
+}
+
+.loop-back-arrow {
+  display: block;
+  width: 100%;
+  height: 2.2rem;
+  color: #cabf9f;
+}
+
+.loop-back-label {
+  font-size: 0.72rem;
+  text-align: center;
+  opacity: 0.5;
+  margin-top: -0.4rem;
+}
+
+.loop-oneshot-flow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.loop-oneshot-node {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  background: #ede7d8;
+}
+
+.loop-oneshot-done {
+  background: #171614;
+  color: #f7f5f0;
+}
+
+.loop-oneshot-arrow {
+  opacity: 0.45;
+}
+
+.loop-oneshot-caption {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.loop-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.loop-lap {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  min-height: 1.4rem;
+}
+
+/* ---------- Step: Graph ---------- */
+
+.gr-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.gr-diagram-scroll {
+  overflow-x: auto;
+  margin-bottom: 1.4rem;
+}
+
+.gr-diagram {
+  position: relative;
+  width: 100%;
+  min-width: 34rem;
+  aspect-ratio: 100 / 40;
+}
+
+.gr-edges {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: #cabf9f;
+}
+
+.gr-edge {
+  fill: none;
+  stroke: #cabf9f;
+  stroke-width: 0.6;
+}
+
+.gr-edge-dep {
+  stroke: #e8611e;
+  stroke-dasharray: 1.6 1.2;
+}
+
+.gr-edge-label {
+  font-size: 2.1px;
+  fill: #8a8272;
+}
+
+.gr-edge-label-dep {
+  fill: #e8611e;
+}
+
+.gr-nodes {
+  position: absolute;
+  inset: 0;
+}
+
+.gr-node {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #cabf9f;
+  background: #f7f5f0;
+  color: #171614;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gr-node-diamond {
+  border-style: dashed;
+  border-color: #8a8272;
+  font-style: italic;
+}
+
+.gr-node.current {
+  border-color: #1f8a56;
+  color: #1f8a56;
+  background: #ede7d8;
+}
+
+.gr-scroll-hint {
+  display: none;
+  font-size: 0.75rem;
+  opacity: 0.5;
+  margin: -0.8rem 0 1.2rem;
+}
+
+.gr-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 62ch;
+  min-height: 1.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.gr-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Memory ---------- */
+
+.mem-intro {
+  max-width: 62ch;
+  margin-bottom: 1.6rem;
+}
+
+.mem-default {
+  max-width: 62ch;
+  margin-bottom: 1.6rem;
+}
+
+.mem-alt-lead {
+  max-width: 62ch;
+  margin-bottom: 0.6rem;
+}
+
+.mem-alt-list {
+  margin: 0 0 1.8rem;
+  padding-left: 1.2rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 62ch;
+}
+
+.mem-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 1rem;
+}
+
+/* ---------- Step: Plugins ---------- */
+
+.plg-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.plg-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.plg-notes {
+  margin: 0 0 1.6rem;
+  max-width: 62ch;
+}
+
+.plg-note {
+  margin-bottom: 1rem;
+}
+
+.plg-note dt {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.3rem;
+}
+
+.plg-note dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+.plg-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: MCP ---------- */
+
+.mcp-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.mcp-flow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.8rem;
+}
+
+.mcp-flow-node {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.7rem 1.1rem;
+  background: #ede7d8;
+}
+
+.mcp-flow-protocol {
+  background: #171614;
+  color: #f7f5f0;
+}
+
+.mcp-flow-arrow {
+  opacity: 0.45;
+  font-size: 1.1rem;
+}
+
+.mcp-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 1rem;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -1363,7 +1869,11 @@ code.inline {
 .stx-reveal,
 .pr-tab,
 .ag-controls button,
-.sub-reveal {
+.sub-reveal,
+.sk-tab,
+.hk-nav-btn,
+.loop-toggle-btn,
+.loop-controls button {
   font-family: inherit;
   font-size: 0.85rem;
   padding: 8px 18px;
@@ -1384,14 +1894,20 @@ code.inline {
 .sub-tree-child:hover,
 .cmp-tab:hover,
 .econ-stage-btn:hover,
-.sel-scenario:hover {
+.sel-scenario:hover,
+.sk-tab:hover,
+.hk-nav-btn:hover,
+.loop-toggle-btn:hover,
+.loop-controls button:hover:not(:disabled),
+.gr-node:hover {
   background: #ece6d9;
 }
 
 .step-nav button:disabled,
 .trad-controls button:disabled,
 .tok-controls button:disabled,
-.ag-controls button:disabled {
+.ag-controls button:disabled,
+.loop-controls button:disabled {
   opacity: 0.35;
   cursor: default;
 }
@@ -1438,5 +1954,9 @@ code.inline {
 
   .mc-category {
     min-width: 0;
+  }
+
+  .gr-scroll-hint {
+    display: block;
   }
 }
