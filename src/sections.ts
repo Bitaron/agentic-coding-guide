@@ -26,6 +26,11 @@ import { mount as mountFrontendBrowserTesting } from "./steps/frontend-browser-t
 import { mount as mountBackendPlanning } from "./steps/backend-planning";
 import { mount as mountBackendStructure } from "./steps/backend-structure";
 import { mount as mountBackendHandoff } from "./steps/backend-handoff";
+import { mount as mountExistingProjectAsk } from "./steps/existing-project-ask";
+import { mount as mountExistingProjectContext } from "./steps/existing-project-context";
+import { mount as mountExistingProjectDoc } from "./steps/existing-project-doc";
+import { mount as mountExistingProjectPlan } from "./steps/existing-project-plan";
+import { mount as mountExistingProjectReview } from "./steps/existing-project-review";
 
 export interface Step {
   title: string;
@@ -54,9 +59,7 @@ export interface Section {
 
 // Content-specific tickets (see the "AI Coding Session Website —
 // content/IA spec" wayfinder map, issue #2) replace these placeholder
-// steps section by section. "Working in an existing project" has no
-// content decision yet, so it gets a route and nav entry only — its
-// structure is not invented here.
+// steps section by section.
 export const sections: Section[] = [
   {
     id: "intro",
@@ -223,8 +226,29 @@ export const sections: Section[] = [
     label: "Working in an existing project",
     steps: [
       {
-        title: "Coming soon",
-        body: "This section's content has not been decided yet.",
+        title: "Ask about the project and the change",
+        wide: true,
+        mount: mountExistingProjectAsk,
+      },
+      {
+        title: "Build context",
+        wide: true,
+        mount: mountExistingProjectContext,
+      },
+      {
+        title: "Write AGENT.md",
+        wide: true,
+        mount: mountExistingProjectDoc,
+      },
+      {
+        title: "Plan → review",
+        wide: true,
+        mount: mountExistingProjectPlan,
+      },
+      {
+        title: "Code review",
+        wide: true,
+        mount: mountExistingProjectReview,
       },
     ],
   },

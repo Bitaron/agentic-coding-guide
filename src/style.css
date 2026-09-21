@@ -190,6 +190,11 @@ code.inline {
 .main {
   padding: 10vh 6vw;
   max-width: 900px;
+  /* .shell's grid track otherwise sizes to this item's min-content, which a
+     wide-step's unwrapped code line (.ex-file-body) can inflate well past
+     the viewport — grid's implicit "auto" minimum, same root cause as
+     flexbox's min-width:auto blowout. */
+  min-width: 0;
 }
 
 .frame {
@@ -2371,6 +2376,108 @@ code.inline {
   font-size: 0.9rem;
 }
 
+/* ---------- Step: Working in an existing project ---------- */
+/* Narrated transcript + right-hand teaching-callout rail (variant B+C
+   merge from prototype/existing-project-transcript-final.html, ticket #23).
+   Dialogue and code excerpts share one monospace column; the rail explains
+   *why* each beat matters without interrupting the transcript's flow. Human
+   and agent get the same two accent colors the rest of the site already
+   assigns them meaning (current-step green, done-dot orange) rather than
+   new ones. */
+
+.ex-intro {
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.ex-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 74rem;
+  min-width: 0;
+}
+
+.ex-line {
+  display: grid;
+  grid-template-columns: 84px 1fr 280px;
+  gap: 1.2rem;
+  padding: 0.9rem 0;
+  border-top: 1px solid #e2dacb;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  min-width: 0;
+}
+
+.ex-transcript > .ex-line:first-child {
+  border-top: none;
+}
+
+.ex-who {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  padding-top: 0.15rem;
+}
+
+.ex-who.human {
+  color: #1f8a56;
+}
+
+.ex-who.agent {
+  color: #b3541a;
+}
+
+.ex-msg {
+  white-space: pre-wrap;
+  min-width: 0;
+}
+
+.ex-note {
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: #5c5648;
+  border-left: 2px solid #e2dacb;
+  padding-left: 0.9rem;
+}
+
+.ex-note.human-led {
+  border-left-color: #1f8a56;
+  color: #171614;
+}
+
+.ex-note strong {
+  color: #171614;
+}
+
+.ex-file {
+  background: #ede7d8;
+  padding: 1rem 1.2rem;
+  margin: 0.2rem 0 0.9rem;
+  min-width: 0;
+}
+
+.ex-file-path {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-bottom: 0.5rem;
+}
+
+.ex-file-body {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+  white-space: pre;
+  overflow-x: auto;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -2484,5 +2591,21 @@ code.inline {
   .bx-shot-meta {
     flex-wrap: wrap;
     gap: 0.4rem 0.8rem;
+  }
+
+  .ex-line {
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .ex-note {
+    border-left: none;
+    padding-left: 0;
+    padding-top: 0.3rem;
+    border-top: 1px dashed #e2dacb;
+  }
+
+  .ex-note:empty {
+    display: none;
   }
 }
