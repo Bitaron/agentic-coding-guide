@@ -1,0 +1,313 @@
+/* Visual language per docs/design-brief.md — settled in
+   prototype/palette-q3-final.html (layout/color/type) and
+   prototype/transitions-round2.html variant J (step transition). */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: #f7f5f0;
+  color: #171614;
+  font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+code.inline {
+  font-family: "SF Mono", Menlo, monospace;
+  background: #ece6d9;
+  padding: 0.1em 0.35em;
+}
+
+/* ---------- Shell: sidebar + main content ---------- */
+
+.shell {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  min-height: 100vh;
+  transition: grid-template-columns 260ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shell.expanded {
+  grid-template-columns: 300px 1fr;
+}
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+  background: #f7f5f0;
+  color: #171614;
+  font-family: inherit;
+  overflow: hidden;
+  position: relative;
+  border-right: 1px solid #e2dacb;
+}
+
+.toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shell.expanded .toggle {
+  right: auto;
+  left: 18px;
+}
+
+.toggle:hover {
+  background: #ece6d9;
+}
+
+.dot-rail {
+  padding: 70px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.shell.expanded .dot-rail {
+  display: none;
+}
+
+.dot-rail .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #dcd5c4;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dot-rail .dot.done {
+  background: #e8611e;
+}
+
+.dot-rail .dot.current {
+  background: #2fb673;
+  width: 14px;
+  height: 14px;
+}
+
+.nav {
+  display: none;
+  padding: 64px 20px 24px;
+  white-space: nowrap;
+  font-family: inherit;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.shell.expanded .nav {
+  display: block;
+}
+
+.nav .site-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 1.6rem;
+}
+
+.nav .section {
+  margin-bottom: 0.4rem;
+}
+
+.nav .section-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 8px 0;
+  color: #171614;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.nav .section-heading .n {
+  color: #8a8272;
+  font-weight: 400;
+  font-size: 0.78rem;
+}
+
+.nav .section.current .section-heading {
+  color: #1f8a56;
+}
+
+.nav .steps {
+  margin: 4px 0 12px;
+  padding-left: 2px;
+  border-left: 2px solid #e2dacb;
+}
+
+.nav .step {
+  display: block;
+  padding: 5px 0 5px 14px;
+  font-size: 0.82rem;
+  color: #857f72;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-left: -2px;
+  font-family: inherit;
+}
+
+.nav .step.current {
+  color: #171614;
+  border-left-color: #1f8a56;
+  font-weight: 600;
+}
+
+.nav .step:hover {
+  color: #171614;
+}
+
+/* ---------- Main content: frame + title-card ---------- */
+
+.main {
+  padding: 10vh 6vw;
+  max-width: 900px;
+}
+
+.frame {
+  transition: border-radius 450ms ease, transform 450ms ease;
+}
+
+.frame.pulsing-strong {
+  border-radius: 26px;
+  transform: scale(0.94);
+}
+
+.panel {
+  transform-origin: center;
+}
+
+.panel.scale-together {
+  transition: transform 450ms ease;
+}
+
+.panel.scale-together-out {
+  transform: scale(0.94);
+}
+
+.panel.scale-together-in-start {
+  transform: scale(1.06);
+}
+
+.title-card {
+  position: relative;
+  min-height: 220px;
+  margin-bottom: 2rem;
+}
+
+.ghost-num {
+  position: absolute;
+  top: -3rem;
+  left: -1rem;
+  font-size: 11rem;
+  font-weight: 800;
+  color: #ede7d8;
+  z-index: 1;
+  line-height: 1;
+  user-select: none;
+}
+
+.title-card h1 {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 4.6rem 0 0 1rem;
+}
+
+.title-card .meta {
+  position: relative;
+  z-index: 2;
+  margin-left: 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+.content {
+  max-width: 62ch;
+  margin-left: 1rem;
+}
+
+.content p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+}
+
+.content pre {
+  background: #ede7d8;
+  color: #171614;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+}
+
+.step-nav {
+  margin: 2.5rem 0 0 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.step-nav button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.step-nav button:hover:not(:disabled) {
+  background: #ece6d9;
+}
+
+.step-nav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 8vh 5vw;
+  }
+
+  .ghost-num {
+    font-size: 6.5rem;
+  }
+
+  .title-card h1 {
+    margin-top: 3rem;
+  }
+}
