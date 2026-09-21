@@ -2185,17 +2185,65 @@ code.inline {
   padding: 0.15rem 0 0.15rem 1.4rem;
 }
 
-/* Placeholder screenshot slots (issue #19's shell; issue #20 fills these
-   in). Dashed border + "Pending capture" tag keep them unmistakably
-   unfinished rather than quietly passing for real content. */
+/* Real screenshots, curated at launch (issue #20) from frontendExample/ —
+   mirrors the Backend dev example's .bx-shot* pattern below, with an fx-
+   prefix and no per-machine badge (this section's whole build was one
+   session, one machine). */
 
-.fx-slots {
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
+.fx-beat-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin: 2.4rem 0 1rem;
 }
 
-.fx-slot {
+.fx-beat-heading:first-child {
+  margin-top: 0;
+}
+
+.fx-shots {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  margin-bottom: 2rem;
+}
+
+.fx-shot {
+  margin: 0;
+  max-width: 42rem;
+}
+
+.fx-shot-time {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.fx-shot-frame {
+  display: block;
+  overflow: hidden;
+  border: 1px solid #e2dacb;
+  background: #171614;
+}
+
+.fx-shot-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fx-shot-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+  margin-top: 0.7rem;
+}
+
 /* ---------- Step: Backend dev example ---------- */
 
 .bx-intro,
@@ -2240,42 +2288,6 @@ code.inline {
   max-width: 42rem;
 }
 
-.fx-slot-frame {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 9rem;
-  padding: 1.2rem 1.4rem;
-  border: 1.5px dashed #cabf9f;
-  background: repeating-linear-gradient(
-    135deg,
-    transparent,
-    transparent 10px,
-    #ede7d8 10px,
-    #ede7d8 11px
-  );
-}
-
-.fx-slot-tag {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #8a5a2b;
-  border: 1px solid #cabf9f;
-  background: #f7f5f0;
-  padding: 2px 8px;
-}
-
-.fx-slot-label {
-  font-size: 0.92rem;
-  font-weight: 600;
-  max-width: 36rem;
-}
-
-.fx-slot-caption {
 .bx-shot-meta {
   display: flex;
   align-items: baseline;
@@ -2469,9 +2481,6 @@ code.inline {
     display: block;
   }
 
-  .fx-slot-frame {
-    min-height: 7rem;
-    padding: 1rem;
   .bx-shot-meta {
     flex-wrap: wrap;
     gap: 0.4rem 0.8rem;
