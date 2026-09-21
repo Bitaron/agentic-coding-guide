@@ -1,9 +1,9 @@
 # Design brief — visual language
 
-Written for [issue #11](https://github.com/Bitaron/AI-Coding-Session-Interactive-Teaching-Website/issues/11).
+Written for [issue #11](https://github.com/Bitaron/agentic-coding-guide/issues/11).
 Covers typography, spacing rhythm, color approach, the progress-indicator
 treatment, and step-transition feel. Every section-content ticket and the
-scaffold ticket ([#12](https://github.com/Bitaron/AI-Coding-Session-Interactive-Teaching-Website/issues/12))
+scaffold ticket ([#12](https://github.com/Bitaron/agentic-coding-guide/issues/12))
 build against this rather than re-deciding it per section.
 
 Reached via real UI references pulled with the lazyweb MCP and interactive
