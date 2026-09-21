@@ -1854,6 +1854,298 @@ code.inline {
   margin-top: 1rem;
 }
 
+/* ---------- Step: Specification ---------- */
+
+.spec-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.spec-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.6rem;
+}
+
+.spec-node {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8a8272;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms ease, background 200ms ease;
+}
+
+.spec-node.current {
+  color: #171614;
+  background: #ede7d8;
+}
+
+.spec-arrow {
+  opacity: 0.4;
+  padding-left: 1rem;
+}
+
+.spec-panel {
+  max-width: 62ch;
+  min-height: 5.5rem;
+  margin-bottom: 1.6rem;
+}
+
+.spec-panel-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.spec-panel-detail {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.spec-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.spec-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: ADR ---------- */
+
+.adr-intro,
+.adr-lead {
+  max-width: 62ch;
+  margin-bottom: 1.2rem;
+}
+
+.adr-walkthrough {
+  background: #ede7d8;
+  padding: 1.3rem 1.5rem;
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.adr-walkthrough-path,
+.adr-file-path {
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.55;
+  margin-bottom: 0.6rem;
+}
+
+.adr-walkthrough-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 1rem;
+}
+
+.adr-segment {
+  margin-bottom: 1rem;
+}
+
+.adr-segment:last-child {
+  margin-bottom: 0;
+}
+
+.adr-segment-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  opacity: 0.55;
+  margin-bottom: 0.3rem;
+}
+
+.adr-segment-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.adr-more-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.adr-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.adr-tab {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.adr-panel {
+  background: #ede7d8;
+  padding: 1.2rem 1.4rem;
+  max-width: 62ch;
+}
+
+.adr-file-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 0.8rem;
+}
+
+.adr-file-excerpt {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 0 0 0.6rem;
+}
+
+.adr-file-note {
+  font-size: 0.75rem;
+  opacity: 0.55;
+  font-style: italic;
+}
+
+/* ---------- Step: TDD ---------- */
+
+.tdd-intro {
+  max-width: 62ch;
+  margin-bottom: 1.8rem;
+}
+
+.tdd-chain {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+}
+
+.tdd-node {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #8a8272;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: color 200ms ease, background 200ms ease;
+}
+
+.tdd-node.current {
+  color: #171614;
+  background: #ede7d8;
+}
+
+.tdd-arrow {
+  opacity: 0.4;
+  padding-left: 1rem;
+}
+
+.tdd-loop-back {
+  font-size: 0.8rem;
+  font-style: italic;
+  opacity: 0.55;
+  padding: 0.4rem 1rem 0;
+}
+
+.tdd-panel {
+  max-width: 62ch;
+  min-height: 5.5rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.tdd-panel-heading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.tdd-panel-detail {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.tdd-lead {
+  max-width: 62ch;
+  margin-bottom: 1rem;
+}
+
+.tdd-roles {
+  max-width: 62ch;
+  margin: 0 0 1.6rem;
+}
+
+.tdd-role {
+  margin-bottom: 0.9rem;
+}
+
+.tdd-role dt {
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.2rem;
+}
+
+.tdd-role dd {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  opacity: 0.85;
+}
+
+.tdd-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Code review ---------- */
+
+.cr-intro {
+  max-width: 62ch;
+  margin-bottom: 0.8rem;
+}
+
+.cr-dont {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.cr-do {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.cr-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
 .step-nav {
   margin: 2.5rem 0 0 1rem;
   padding-top: 1.6rem;
@@ -1873,7 +2165,8 @@ code.inline {
 .sk-tab,
 .hk-nav-btn,
 .loop-toggle-btn,
-.loop-controls button {
+.loop-controls button,
+.adr-tab {
   font-family: inherit;
   font-size: 0.85rem;
   padding: 8px 18px;
@@ -1899,7 +2192,10 @@ code.inline {
 .hk-nav-btn:hover,
 .loop-toggle-btn:hover,
 .loop-controls button:hover:not(:disabled),
-.gr-node:hover {
+.gr-node:hover,
+.adr-tab:hover,
+.spec-node:hover,
+.tdd-node:hover {
   background: #ece6d9;
 }
 

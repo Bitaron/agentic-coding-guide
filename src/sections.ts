@@ -16,6 +16,10 @@ import { mount as mountGraph } from "./steps/graph";
 import { mount as mountMemory } from "./steps/memory";
 import { mount as mountPlugins } from "./steps/plugins";
 import { mount as mountMcp } from "./steps/mcp";
+import { mount as mountSpecification } from "./steps/specification";
+import { mount as mountAdr } from "./steps/adr";
+import { mount as mountTdd } from "./steps/tdd";
+import { mount as mountCodeReview } from "./steps/code-review";
 
 export interface Step {
   title: string;
@@ -144,9 +148,25 @@ export const sections: Section[] = [
         title: "MCP",
         mount: mountMcp,
       },
+      // Steps 19-22: SE practices in agentic development. Built by issue #17.
       {
-        title: "Coming soon",
-        body: "The rest of this section's steps are being written — see the Intro to AI SE practices ticket (#17).",
+        title: "Specification",
+        wide: true,
+        mount: mountSpecification,
+      },
+      {
+        title: "ADR — Architecture Decision Records",
+        wide: true,
+        mount: mountAdr,
+      },
+      {
+        title: "TDD",
+        wide: true,
+        mount: mountTdd,
+      },
+      {
+        title: "Code review",
+        mount: mountCodeReview,
       },
     ],
   },
