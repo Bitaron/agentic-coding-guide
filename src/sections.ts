@@ -20,6 +20,9 @@ import { mount as mountSpecification } from "./steps/specification";
 import { mount as mountAdr } from "./steps/adr";
 import { mount as mountTdd } from "./steps/tdd";
 import { mount as mountCodeReview } from "./steps/code-review";
+import { mount as mountFrontendIntro } from "./steps/frontend-intro";
+import { mount as mountFrontendDesignResearch } from "./steps/frontend-design-research";
+import { mount as mountFrontendBrowserTesting } from "./steps/frontend-browser-testing";
 import { mount as mountBackendPlanning } from "./steps/backend-planning";
 import { mount as mountBackendStructure } from "./steps/backend-structure";
 import { mount as mountBackendHandoff } from "./steps/backend-handoff";
@@ -199,8 +202,19 @@ export const sections: Section[] = [
     label: "Frontend dev example",
     steps: [
       {
-        title: "Coming soon",
-        body: "This section's steps are being written — see the Frontend dev example tickets.",
+        title: "This site is the example",
+        wide: true,
+        mount: mountFrontendIntro,
+      },
+      {
+        title: "Design research — Lazyweb MCP",
+        wide: true,
+        mount: mountFrontendDesignResearch,
+      },
+      {
+        title: "Browser testing — Playwright MCP",
+        wide: true,
+        mount: mountFrontendBrowserTesting,
       },
     ],
   },
