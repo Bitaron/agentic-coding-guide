@@ -1,6 +1,24 @@
+import { mount as mountTraditionalDevelopment } from "./steps/traditional-development";
+import { mount as mountTokenGeneration } from "./steps/token-generation";
+import { mount as mountStatelessSessions } from "./steps/stateless-sessions";
+
 export interface Step {
   title: string;
-  body: string;
+  /** Plain-HTML body for text-only steps. */
+  body?: string;
+  /**
+   * For steps whose representation is a diagram/animation/demo rather than
+   * prose (per .claude/skills/create-section/SKILL.md's representation-type
+   * choice): mounts interactive content into the given container and
+   * returns an optional cleanup (e.g. to stop a running animation) that's
+   * called before the step is torn down.
+   */
+  mount?: (container: HTMLElement) => (() => void) | void;
+  /**
+   * Steps whose content needs more than the default 62ch reading column
+   * (diagrams, side-by-side comparisons) opt into the wider layout.
+   */
+  wide?: boolean;
 }
 
 export interface Section {
@@ -20,8 +38,23 @@ export const sections: Section[] = [
     label: "Intro to AI",
     steps: [
       {
+        title: "Traditional software building",
+        wide: true,
+        mount: mountTraditionalDevelopment,
+      },
+      {
+        title: "Token generation",
+        wide: true,
+        mount: mountTokenGeneration,
+      },
+      {
+        title: "Stateless sessions",
+        wide: true,
+        mount: mountStatelessSessions,
+      },
+      {
         title: "Coming soon",
-        body: "This section's steps are being written — see the Intro to AI content tickets.",
+        body: "The rest of this section's steps are being written — see the Intro to AI content tickets.",
       },
     ],
   },

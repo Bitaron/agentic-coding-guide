@@ -259,6 +259,10 @@ code.inline {
   margin-left: 1rem;
 }
 
+.content.wide {
+  max-width: 100%;
+}
+
 .content p {
   font-size: 1.05rem;
   line-height: 1.65;
@@ -273,10 +277,332 @@ code.inline {
   overflow-x: auto;
 }
 
-.step-nav {
-  margin: 2.5rem 0 0 1rem;
+/* ---------- Step: Traditional software building ---------- */
+
+.trad-intro {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.trad-track {
+  margin: 2.5rem 0 2rem;
+}
+
+.trad-line {
+  display: flex;
+  height: 3px;
+  background: #e2dacb;
+}
+
+.trad-segment {
+  flex: 1;
+  background: transparent;
+  transition: background 350ms ease;
+}
+
+.trad-segment.done {
+  background: #e8611e;
+}
+
+.trad-segment.current {
+  background: #2fb673;
+}
+
+.trad-nodes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.9rem;
+}
+
+.trad-node {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8a8272;
+  transition: color 250ms ease;
+}
+
+.trad-node.done {
+  color: #e8611e;
+}
+
+.trad-node.current {
+  color: #1f8a56;
+}
+
+.trad-stage-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.trad-stage-btn {
+  font-family: inherit;
+  font-size: 0.82rem;
+  padding: 7px 14px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.trad-stage-btn.current {
+  border-color: #1f8a56;
+  color: #1f8a56;
+  font-weight: 600;
+}
+
+.trad-stage-btn.done {
+  border-color: #e8611e;
+  color: #e8611e;
+}
+
+.trad-panel {
+  max-width: 62ch;
+  min-height: 11rem;
+}
+
+.trad-panel-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 0.8rem;
+}
+
+.trad-panel-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.trad-controls {
+  margin-top: 1.5rem;
   display: flex;
   gap: 1rem;
+}
+
+.trad-controls button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.trad-controls button:hover:not(:disabled) {
+  background: #ece6d9;
+}
+
+.trad-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ---------- Step: Token generation ---------- */
+
+.tok-intro {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.tok-stage {
+  margin: 2.2rem 0 1.6rem;
+  min-height: 7rem;
+}
+
+.tok-context-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  margin-bottom: 0.7rem;
+}
+
+.tok-chips {
+  background: #ede7d8;
+  padding: 1.2rem 1.4rem;
+  min-height: 1.6rem;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.95rem;
+  line-height: 2.1;
+}
+
+.tok-chip {
+  display: inline-block;
+}
+
+.tok-chip.new {
+  color: #1f8a56;
+  font-weight: 700;
+  animation: tok-pop 400ms ease;
+}
+
+@keyframes tok-pop {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tok-predict {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #1f8a56;
+}
+
+.tok-controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+.tok-controls button {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.tok-controls button:hover:not(:disabled) {
+  background: #ece6d9;
+}
+
+.tok-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.tok-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
+/* ---------- Step: Stateless sessions ---------- */
+
+.stx-intro {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin-bottom: 2rem;
+}
+
+.stx-pair {
+  display: flex;
+  align-items: stretch;
+  gap: 1.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.stx-session {
+  flex: 1;
+  background: #ede7d8;
+  padding: 1.4rem 1.6rem;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 0.9rem;
+}
+
+.stx-session-label {
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.stx-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.stx-arrow {
+  opacity: 0.55;
+}
+
+.stx-gap {
+  flex: 0 0 auto;
+  width: 9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.5;
+}
+
+.stx-reveal {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 8px 18px;
+  border: 1px solid #cabf9f;
+  background: transparent;
+  color: #171614;
+  cursor: pointer;
+}
+
+.stx-reveal:hover {
+  background: #ece6d9;
+}
+
+.stx-persisted {
+  margin-top: 2rem;
+  padding-top: 1.8rem;
+  border-top: 1px solid #e2dacb;
+}
+
+.stx-persisted-intro {
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 62ch;
+  margin-bottom: 1.4rem;
+}
+
+.stx-pair-linked .stx-store {
+  flex: 0 0 auto;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.78rem;
+  border: 1px dashed #cabf9f;
+  padding: 0.6rem;
+}
+
+@media (max-width: 640px) {
+  .stx-pair,
+  .stx-pair-linked {
+    flex-direction: column;
+  }
+
+  .stx-gap,
+  .stx-pair-linked .stx-store {
+    width: auto;
+    padding: 0.4rem 0;
+  }
+}
+
+.step-nav {
+  margin: 2.5rem 0 0 1rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid #e2dacb;
+  display: flex;
+  gap: 1rem;
+  max-width: 62ch;
 }
 
 .step-nav button {

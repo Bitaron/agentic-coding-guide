@@ -101,7 +101,12 @@ function renderNav(route: Route): void {
     .join("");
 }
 
+let activeStepCleanup: (() => void) | undefined;
+
 function renderStep(route: Route): void {
+  activeStepCleanup?.();
+  activeStepCleanup = undefined;
+
   const section = findSection(route.sectionId)!;
   const step = section.steps[route.stepIndex];
 
@@ -110,7 +115,14 @@ function renderStep(route: Route): void {
     section.steps.length
   }`;
   heading.textContent = step.title;
-  content.innerHTML = `<p>${step.body}</p>`;
+  content.classList.toggle("wide", Boolean(step.wide));
+  content.innerHTML = "";
+
+  if (step.mount) {
+    activeStepCleanup = step.mount(content) ?? undefined;
+  } else if (step.body) {
+    content.innerHTML = `<p>${step.body}</p>`;
+  }
 
   prevStep.disabled = route.stepIndex === 0;
   nextStep.disabled = route.stepIndex === section.steps.length - 1;
