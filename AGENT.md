@@ -71,4 +71,4 @@ Use placeholders where sensitive information has been removed.
 
 ### Issue tracker
 
-Issues live in this repo's GitHub Issues (`Bitaron/AI-Coding-Session-Interactive-Teaching-Website`), via the `gh` CLI. See [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md) — also the entry point for resuming the active `/wayfinder` map ("AI Coding Session Website — content/IA spec", issue #2).
+Issues live in this repo's GitHub Issues (`Bitaron/agentic-coding-guide`), via the `gh` CLI. See [docs/agents/issue-tracker.md](docs/agents/issue-tracker.md) — also the entry point for resuming the active `/wayfinder` map ("AI Coding Session Website — content/IA spec", issue #2).

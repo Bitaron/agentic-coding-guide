@@ -4,11 +4,11 @@ This folder is a snapshot of an AI-assisted design decision as it actually
 happened, kept as teaching material rather than deleted after the decision
 was made. It's part of the *Frontend dev example* section's own "design
 research" sub-thread — this site documenting its own build (see the site's
-`CONTEXT.md` and [issue #2](https://github.com/Bitaron/AI-Coding-Session-Interactive-Teaching-Website/issues/2)).
+`CONTEXT.md` and [issue #2](https://github.com/Bitaron/agentic-coding-guide/issues/2)).
 
 ## The situation
 
-[Issue #11](https://github.com/Bitaron/AI-Coding-Session-Interactive-Teaching-Website/issues/11)
+[Issue #11](https://github.com/Bitaron/agentic-coding-guide/issues/11)
 asks for a written design brief for the site's visual language (typography,
 spacing, color, progress indicator, step transitions) before any scaffolding
 code is written. Two of the open questions — the base palette, and the
