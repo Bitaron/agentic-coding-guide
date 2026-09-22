@@ -4,11 +4,26 @@
 // so triggers are matched by delegation on document rather than by
 // binding listeners per figure — the modal itself is built once and
 // survives route changes untouched.
+//
+// Beyond fit-to-screen, the dialog supports magnifying the screenshot
+// (buttons, +/-/0 keys, or clicking the image) — several of the shots
+// are terminal sessions with small text that fit-to-screen alone can't
+// make legible. Panning past 100% relies on the browser's native
+// scrolling of the transformed image rather than a hand-rolled drag.
+
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 4;
+const ZOOM_STEP = 0.5;
+const ZOOM_CLICK_LEVEL = 2;
 
 let modal: HTMLDivElement;
+let dialog: HTMLDivElement;
 let modalImg: HTMLImageElement;
 let closeButton: HTMLButtonElement;
+let zoomInButton: HTMLButtonElement;
+let zoomOutButton: HTMLButtonElement;
 let lastFocused: HTMLElement | null = null;
+let zoom = ZOOM_MIN;
 
 function buildModal(): void {
   modal = document.createElement("div");
@@ -19,21 +34,62 @@ function buildModal(): void {
     <div class="image-modal-dialog" role="dialog" aria-modal="true" aria-label="Enlarged screenshot">
       <img class="image-modal-img" alt="" />
     </div>
+    <div class="image-modal-controls">
+      <button type="button" class="image-modal-zoom-out" aria-label="Zoom out">&minus;</button>
+      <button type="button" class="image-modal-zoom-in" aria-label="Zoom in">&plus;</button>
+    </div>
     <button type="button" class="image-modal-close" aria-label="Close">&times;</button>
   `;
   document.body.appendChild(modal);
 
+  dialog = modal.querySelector(".image-modal-dialog")!;
   modalImg = modal.querySelector(".image-modal-img")!;
   closeButton = modal.querySelector(".image-modal-close")!;
+  zoomInButton = modal.querySelector(".image-modal-zoom-in")!;
+  zoomOutButton = modal.querySelector(".image-modal-zoom-out")!;
 
   closeButton.addEventListener("click", closeImageModal);
   modal
     .querySelector("[data-modal-dismiss]")!
     .addEventListener("click", closeImageModal);
+
+  zoomInButton.addEventListener("click", zoomIn);
+  zoomOutButton.addEventListener("click", zoomOut);
+  modalImg.addEventListener("click", () => {
+    if (zoom > ZOOM_MIN) resetZoom();
+    else setZoom(ZOOM_CLICK_LEVEL);
+  });
 }
 
 function isOpen(): boolean {
   return modal.classList.contains("is-open");
+}
+
+function setZoom(next: number): void {
+  zoom = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, next));
+  modalImg.style.transform = zoom === ZOOM_MIN ? "" : `scale(${zoom})`;
+  modal.classList.toggle("is-zoomed", zoom > ZOOM_MIN);
+  zoomOutButton.disabled = zoom <= ZOOM_MIN;
+  zoomInButton.disabled = zoom >= ZOOM_MAX;
+
+  // A scaled image enlarges the dialog's scrollable area (per the CSS
+  // Transforms spec) without changing its own layout box, so the dialog
+  // itself stays the fit-to-screen "window" the zoomed image scrolls
+  // within. Center that window on every zoom change.
+  dialog.scrollLeft = (dialog.scrollWidth - dialog.clientWidth) / 2;
+  dialog.scrollTop = (dialog.scrollHeight - dialog.clientHeight) / 2;
+}
+
+function zoomIn(): void {
+  setZoom(zoom + ZOOM_STEP);
+}
+
+function zoomOut(): void {
+  setZoom(zoom - ZOOM_STEP);
+}
+
+function resetZoom(): void {
+  setZoom(ZOOM_MIN);
 }
 
 function openModal(trigger: HTMLElement): void {
@@ -42,6 +98,7 @@ function openModal(trigger: HTMLElement): void {
 
   modalImg.src = img.currentSrc || img.src;
   modalImg.alt = img.alt;
+  resetZoom();
   lastFocused = document.activeElement as HTMLElement | null;
 
   modal.classList.add("is-open");
@@ -65,6 +122,13 @@ export function closeImageModal(): void {
   modal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
   modalImg.removeAttribute("src");
+  resetZoom();
+}
+
+function focusableElements(): HTMLElement[] {
+  return Array.from(
+    modal.querySelectorAll<HTMLElement>("button:not(:disabled), [href]")
+  );
 }
 
 export function initImageModal(): void {
@@ -87,17 +151,40 @@ export function initImageModal(): void {
   document.addEventListener("keydown", (event) => {
     if (!isOpen()) return;
 
-    if (event.key === "Escape") {
-      closeImageModal();
-      return;
-    }
-
-    // The dialog holds a single focusable control (the close button), so
-    // trap Tab/Shift+Tab on it rather than letting focus escape to page
-    // content hidden behind the backdrop.
-    if (event.key === "Tab") {
-      event.preventDefault();
-      closeButton.focus();
+    switch (event.key) {
+      case "Escape":
+        closeImageModal();
+        return;
+      case "+":
+      case "=":
+        event.preventDefault();
+        zoomIn();
+        return;
+      case "-":
+      case "_":
+        event.preventDefault();
+        zoomOut();
+        return;
+      case "0":
+        event.preventDefault();
+        resetZoom();
+        return;
+      case "Tab": {
+        // Trap Tab/Shift+Tab among the dialog's own controls rather than
+        // letting focus escape to page content hidden behind the backdrop.
+        const focusable = focusableElements();
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+        return;
+      }
     }
   });
 }
