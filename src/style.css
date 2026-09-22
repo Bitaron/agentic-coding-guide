@@ -2660,7 +2660,7 @@ code.inline {
   }
 }
 
-/* ---------- Screenshot zoom modal (see src/image-modal.ts) ---------- */
+/* ---------- Screenshot full-screen viewer (see src/image-modal.ts) ---------- */
 
 body.modal-open {
   overflow: hidden;
@@ -2671,7 +2671,7 @@ body.modal-open {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  padding: 4rem 2rem;
+  padding: 1.5rem;
 }
 
 .image-modal.is-open {
@@ -2685,17 +2685,12 @@ body.modal-open {
 }
 
 .image-modal-dialog {
-  /* The dialog fills the whole padded viewport — not just a box hugging
-     the image — so zooming has room to grow into before scrolling is
-     ever needed, and panning has the full screen as its frame instead
-     of a cropped porthole. */
   flex: 1;
   display: flex;
-  overflow: auto;
   /* position: relative lifts the dialog into its own stacking layer —
      without it, the backdrop's position: absolute (painted after static
      elements regardless of DOM order) sits on top and eats every click
-     meant for the image underneath, including the click-to-zoom toggle. */
+     meant for the image underneath. */
   position: relative;
   /* Opacity-only fade, no scale/pop — softens the instant full-screen
      swap without reading as decorative motion (see CLAUDE.md). */
@@ -2703,36 +2698,19 @@ body.modal-open {
 }
 
 .image-modal-img {
-  /* auto margins (not align-items/justify-content: center) center the
-     image without clipping — flex's alignment properties clamp
-     scrollable overflow to the container box, which would make half of
-     a zoomed-in image unreachable by scroll. */
   margin: auto;
   display: block;
   /* Explicit width/height (not max-width/max-height + width/height: auto)
      so object-fit can scale the image UP to fill the available space too —
      max-width/max-height alone only ever shrinks an oversized image,
      leaving a screenshot smaller than the viewport stranded at native size. */
-  width: calc(100vw - 4rem);
-  height: calc(100vh - 8rem);
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   border: 1px solid #3a3733;
-  transform-origin: center center;
-  transition: transform 120ms ease-out;
-  cursor: zoom-in;
 }
 
-.image-modal.is-zoomed .image-modal-img {
-  cursor: grab;
-}
-
-.image-modal.is-panning .image-modal-img {
-  cursor: grabbing;
-}
-
-.image-modal-close,
-.image-modal-zoom-in,
-.image-modal-zoom-out {
+.image-modal-close {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -2745,32 +2723,13 @@ body.modal-open {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.image-modal-close {
   position: fixed;
   top: 1.4rem;
   right: 1.6rem;
 }
 
-.image-modal-controls {
-  position: fixed;
-  top: 1.4rem;
-  right: 4.6rem;
-  display: flex;
-  gap: 0.5rem;
-}
-
-.image-modal-close:hover,
-.image-modal-zoom-in:hover:not(:disabled),
-.image-modal-zoom-out:hover:not(:disabled) {
+.image-modal-close:hover {
   background: #2a2825;
-}
-
-.image-modal-zoom-in:disabled,
-.image-modal-zoom-out:disabled {
-  opacity: 0.35;
-  cursor: default;
 }
 
 @keyframes image-modal-in {
