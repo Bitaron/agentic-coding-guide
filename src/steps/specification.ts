@@ -53,10 +53,10 @@ export function mount(container: HTMLElement): void {
       <p class="spec-panel-detail"></p>
     </div>
 
-    <p class="spec-lead">Spec Kit is GitHub's open-source toolkit for exactly
-      this workflow: a small set of slash commands that keep an AI coding
-      agent working from an explicit written spec instead of an ad-hoc
-      prompt.</p>
+    <p class="spec-lead"><a class="spec-link" href="https://github.com/github/spec-kit" target="_blank" rel="noopener">Spec Kit</a>
+      is GitHub's open-source toolkit for exactly this workflow: a small set
+      of slash commands that keep an AI coding agent working from an explicit
+      written spec instead of an ad-hoc prompt.</p>
 
     <p class="spec-caption">The spec is the checkpoint: catching a wrong idea
       here is far cheaper than catching it after implementation.</p>

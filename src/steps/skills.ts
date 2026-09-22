@@ -74,8 +74,11 @@ export function mount(container: HTMLElement): void {
     )}
 
     <p class="sk-lead">Before starting a feature, this repository calls that
-      skill to run a structured questioning process. These are its actual
-      files:</p>
+      skill to run a structured questioning process. All three files below
+      are adapted from
+      <a class="sk-link" href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">mattpocock/skills</a>,
+      a public collection of Claude Code skills — not written from scratch
+      for this project. These are the actual files as used here:</p>
 
     <div class="sk-tabs">
       ${FILES.map(
@@ -89,6 +92,12 @@ export function mount(container: HTMLElement): void {
       (<code class="inline">docs/design-brief.md</code>, issue #11) and its
       <code class="inline">CONTEXT.md</code> glossary entries were produced by
       running exactly this skill — not a hypothetical.</p>
+
+    <p class="sk-more-lead">Other public skill collections worth knowing about:</p>
+    <ul class="sk-more">
+      <li><a class="sk-link" href="https://github.com/anthropics/skills" target="_blank" rel="noopener">anthropics/skills</a> — Anthropic's own official skill examples.</li>
+      <li><a class="sk-link" href="https://github.com/affaan-m/ecc" target="_blank" rel="noopener">affaan-m/ecc</a> — a community collection of engineering-focused skills.</li>
+    </ul>
   `;
 
   const tabs = Array.from(container.querySelectorAll<HTMLButtonElement>(".sk-tab"));
