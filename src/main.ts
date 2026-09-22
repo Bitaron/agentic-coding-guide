@@ -32,6 +32,13 @@ app.innerHTML = `
           </div>
         </div>
       </div>
+      <footer class="site-footer">
+        <span>AI Coding Session — teaching material, not a product</span>
+        <span class="site-footer-links">
+          <a href="https://github.com/Bitaron/agentic-coding-guide" target="_blank" rel="noopener">Source</a>
+          <a href="https://github.com/Bitaron/agentic-coding-guide/issues" target="_blank" rel="noopener">Report an issue</a>
+        </span>
+      </footer>
     </main>
   </div>
 `;
