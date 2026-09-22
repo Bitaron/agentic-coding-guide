@@ -1,5 +1,5 @@
 import "./style.css";
-import { sections, findSection } from "./sections";
+import { sections, findSection, nextSection } from "./sections";
 import { onRouteChange, navigate, routePath, type Route } from "./router";
 import { initImageModal, closeImageModal } from "./image-modal";
 
@@ -141,8 +141,14 @@ function renderStep(route: Route): void {
     content.innerHTML = `<p>${step.body}</p>`;
   }
 
+  const onLastStep = route.stepIndex === section.steps.length - 1;
+  const upcomingSection = onLastStep ? nextSection(route.sectionId) : undefined;
+
   prevStep.disabled = route.stepIndex === 0;
-  nextStep.disabled = route.stepIndex === section.steps.length - 1;
+  nextStep.disabled = onLastStep && !upcomingSection;
+  nextStep.textContent = upcomingSection
+    ? `Next: ${upcomingSection.label} →`
+    : "Next →";
 }
 
 let activeRoute: Route;
@@ -203,5 +209,14 @@ prevStep.addEventListener("click", () => {
 });
 
 nextStep.addEventListener("click", () => {
-  goTo({ sectionId: activeRoute.sectionId, stepIndex: activeRoute.stepIndex + 1 });
+  const section = findSection(activeRoute.sectionId)!;
+  if (activeRoute.stepIndex < section.steps.length - 1) {
+    goTo({ sectionId: activeRoute.sectionId, stepIndex: activeRoute.stepIndex + 1 });
+    return;
+  }
+
+  const upcomingSection = nextSection(activeRoute.sectionId);
+  if (upcomingSection) {
+    goTo({ sectionId: upcomingSection.id, stepIndex: 0 });
+  }
 });

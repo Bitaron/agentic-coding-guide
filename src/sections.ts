@@ -257,3 +257,9 @@ export const sections: Section[] = [
 export function findSection(id: string): Section | undefined {
   return sections.find((s) => s.id === id);
 }
+
+/** The section after the given one, if any — used to carry "Next" past a section's last step. */
+export function nextSection(id: string): Section | undefined {
+  const index = sections.findIndex((s) => s.id === id);
+  return index === -1 ? undefined : sections[index + 1];
+}
