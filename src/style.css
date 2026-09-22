@@ -132,6 +132,11 @@ code.inline {
   margin-bottom: 0.4rem;
 }
 
+.nav .section-row {
+  display: flex;
+  align-items: center;
+}
+
 .nav .section-heading {
   font-size: 0.95rem;
   font-weight: 700;
@@ -139,13 +144,33 @@ code.inline {
   color: #171614;
   cursor: pointer;
   display: flex;
+  flex: 1;
+  min-width: 0;
   align-items: center;
   justify-content: space-between;
   background: none;
   border: none;
-  width: 100%;
   text-align: left;
   font-family: inherit;
+}
+
+.nav .section-toggle {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: none;
+  color: #8a8272;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav .section-toggle:hover {
+  color: #171614;
 }
 
 .nav .section-heading .n {

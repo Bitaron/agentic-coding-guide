@@ -63,6 +63,19 @@ toggle.addEventListener("click", () => {
 // max-width:640px rule in style.css), so picking a step should close it —
 // on desktop it stays open as a persistent panel, per docs/design-brief.md.
 navSections.addEventListener("click", (event) => {
+  const toggleSectionId = (
+    event.target as HTMLElement
+  ).closest<HTMLButtonElement>("[data-toggle-section]")?.dataset.toggleSection;
+  if (toggleSectionId) {
+    if (expandedSections.has(toggleSectionId)) {
+      expandedSections.delete(toggleSectionId);
+    } else {
+      expandedSections.add(toggleSectionId);
+    }
+    renderNav(activeRoute);
+    return;
+  }
+
   const isStepLink = (event.target as HTMLElement).closest("a[data-route]");
   if (isStepLink && window.matchMedia("(max-width: 640px)").matches) {
     shell.classList.remove("expanded");
@@ -89,10 +102,16 @@ function renderDotRail(route: Route): void {
     .join("");
 }
 
+// Section step-lists beyond the current section stay collapsed by default;
+// toggling one open is independent of navigation, so browsing another
+// section's steps doesn't move you off your current step.
+const expandedSections = new Set<string>();
+
 function renderNav(route: Route): void {
   navSections.innerHTML = sections
     .map((section) => {
       const isCurrent = section.id === route.sectionId;
+      const isOpen = isCurrent || expandedSections.has(section.id);
       const heading = link(
         { sectionId: section.id, stepIndex: 0 },
         `${section.label} <span class="n">${
@@ -100,7 +119,14 @@ function renderNav(route: Route): void {
         }</span>`,
         "section-heading"
       );
-      const steps = isCurrent
+      const toggleButton = isCurrent
+        ? ""
+        : `<button type="button" class="section-toggle" data-toggle-section="${
+            section.id
+          }" aria-expanded="${isOpen}" aria-label="${
+            isOpen ? "Collapse" : "Expand"
+          } ${section.label} steps">${isOpen ? "▴" : "▾"}</button>`;
+      const steps = isOpen
         ? `<div class="steps">${section.steps
             .map((step, i) =>
               link(
@@ -111,7 +137,7 @@ function renderNav(route: Route): void {
             )
             .join("")}</div>`
         : "";
-      return `<div class="section${isCurrent ? " current" : ""}">${heading}${steps}</div>`;
+      return `<div class="section${isCurrent ? " current" : ""}"><div class="section-row">${heading}${toggleButton}</div>${steps}</div>`;
     })
     .join("");
 }
