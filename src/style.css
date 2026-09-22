@@ -2677,6 +2677,11 @@ body.modal-open {
   flex: 1;
   display: flex;
   overflow: auto;
+  /* position: relative lifts the dialog into its own stacking layer —
+     without it, the backdrop's position: absolute (painted after static
+     elements regardless of DOM order) sits on top and eats every click
+     meant for the image underneath, including the click-to-zoom toggle. */
+  position: relative;
   /* Opacity-only fade, no scale/pop — softens the instant full-screen
      swap without reading as decorative motion (see CLAUDE.md). */
   animation: image-modal-in 120ms ease-out;

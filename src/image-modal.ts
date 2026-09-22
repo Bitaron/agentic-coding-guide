@@ -52,6 +52,15 @@ function buildModal(): void {
   modal
     .querySelector("[data-modal-dismiss]")!
     .addEventListener("click", closeImageModal);
+  // The dialog now paints above the backdrop across its whole box (see the
+  // position: relative rule in style.css), so it — not the backdrop — is
+  // what receives clicks on the empty margin around the image. Dismiss
+  // here too, but only when the dialog itself was the target: a click on
+  // the image bubbles up with that as event.target, and must fall through
+  // to the image's own zoom-toggle handler below instead of closing.
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) closeImageModal();
+  });
 
   zoomInButton.addEventListener("click", zoomIn);
   zoomOutButton.addEventListener("click", zoomOut);
