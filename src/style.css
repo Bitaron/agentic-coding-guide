@@ -2247,6 +2247,71 @@ code.inline {
   max-width: 62ch;
 }
 
+/* ---------- Step: GuardRails ---------- */
+
+.gdr-intro {
+  max-width: 62ch;
+  margin-bottom: 1.4rem;
+}
+
+.gdr-why {
+  max-width: 62ch;
+  margin: 1.4rem 0 1.8rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.gdr-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.6rem;
+}
+
+.gdr-nav-btn {
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8a8272;
+  padding: 0.5rem 1rem;
+  border: 1px solid #d8d0bd;
+  background: transparent;
+  cursor: pointer;
+  transition: color 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+
+.gdr-nav-btn.current {
+  color: #171614;
+  background: #ede7d8;
+  border-color: #ede7d8;
+}
+
+.gdr-panel {
+  max-width: 62ch;
+  min-height: 6.5rem;
+  margin: 1.2rem 0 1.6rem;
+}
+
+.gdr-panel-guards {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 0.6rem;
+}
+
+.gdr-panel-example {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.gdr-caption {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  opacity: 0.65;
+  max-width: 62ch;
+}
+
 /* ---------- Step: Frontend dev example ---------- */
 
 .fx-intro,
@@ -2629,7 +2694,8 @@ code.inline {
 .gr-node:hover,
 .adr-tab:hover,
 .spec-node:hover,
-.tdd-node:hover {
+.tdd-node:hover,
+.gdr-nav-btn:hover {
   background: #ece6d9;
 }
 
