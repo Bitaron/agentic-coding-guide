@@ -2656,8 +2656,6 @@ body.modal-open {
   position: fixed;
   inset: 0;
   z-index: 1000;
-  align-items: center;
-  justify-content: center;
   padding: 4rem 2rem;
 }
 
@@ -2672,12 +2670,12 @@ body.modal-open {
 }
 
 .image-modal-dialog {
-  position: relative;
-  max-width: 100%;
-  max-height: 100%;
-  /* overflow: auto lets the dialog act as a fixed-size window the
-     scaled-up image scrolls within once zoomed past 100% — see
-     setZoom() in image-modal.ts. */
+  /* The dialog fills the whole padded viewport — not just a box hugging
+     the image — so zooming has room to grow into before scrolling is
+     ever needed, and panning has the full screen as its frame instead
+     of a cropped porthole. */
+  flex: 1;
+  display: flex;
   overflow: auto;
   /* Opacity-only fade, no scale/pop — softens the instant full-screen
      swap without reading as decorative motion (see CLAUDE.md). */
@@ -2685,6 +2683,11 @@ body.modal-open {
 }
 
 .image-modal-img {
+  /* auto margins (not align-items/justify-content: center) center the
+     image without clipping — flex's alignment properties clamp
+     scrollable overflow to the container box, which would make half of
+     a zoomed-in image unreachable by scroll. */
+  margin: auto;
   display: block;
   max-width: calc(100vw - 4rem);
   max-height: calc(100vh - 8rem);

@@ -59,10 +59,23 @@ function buildModal(): void {
     if (zoom > ZOOM_MIN) resetZoom();
     else setZoom(ZOOM_CLICK_LEVEL);
   });
+
+  // The dialog's scrollable area only reflects the image's new painted
+  // size once its transform transition has actually finished — reading
+  // scrollWidth/Height synchronously in setZoom() would still see the
+  // pre-zoom size, so recentering has to happen here instead.
+  modalImg.addEventListener("transitionend", (event) => {
+    if (event.propertyName === "transform") centerDialogScroll();
+  });
 }
 
 function isOpen(): boolean {
   return modal.classList.contains("is-open");
+}
+
+function centerDialogScroll(): void {
+  dialog.scrollLeft = (dialog.scrollWidth - dialog.clientWidth) / 2;
+  dialog.scrollTop = (dialog.scrollHeight - dialog.clientHeight) / 2;
 }
 
 function setZoom(next: number): void {
@@ -71,13 +84,10 @@ function setZoom(next: number): void {
   modal.classList.toggle("is-zoomed", zoom > ZOOM_MIN);
   zoomOutButton.disabled = zoom <= ZOOM_MIN;
   zoomInButton.disabled = zoom >= ZOOM_MAX;
-
-  // A scaled image enlarges the dialog's scrollable area (per the CSS
-  // Transforms spec) without changing its own layout box, so the dialog
-  // itself stays the fit-to-screen "window" the zoomed image scrolls
-  // within. Center that window on every zoom change.
-  dialog.scrollLeft = (dialog.scrollWidth - dialog.clientWidth) / 2;
-  dialog.scrollTop = (dialog.scrollHeight - dialog.clientHeight) / 2;
+  // Best-effort immediate centering (correct outright if transitions are
+  // disabled, e.g. prefers-reduced-motion); the transitionend listener
+  // above corrects it once more when an animation actually plays.
+  centerDialogScroll();
 }
 
 function zoomIn(): void {
