@@ -107,6 +107,7 @@ function renderNav(route: Route): void {
 let activeStepCleanup: (() => void) | undefined;
 
 function renderStep(route: Route): void {
+  window.scrollTo(0, 0);
   closeImageModal();
   activeStepCleanup?.();
   activeStepCleanup = undefined;
