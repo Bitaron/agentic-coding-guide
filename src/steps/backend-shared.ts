@@ -17,7 +17,7 @@ export interface Shot {
    * (the Java/Spring Boot decision result and, right below it, the handoff
    * question being typed). Rather than duplicating the file, both beats
    * reference the same image and crop to their half via CSS — the full
-   * frame is still one click away via "View full-size screenshot".
+   * frame is still one click away via the zoom modal.
    */
   crop?: "top" | "bottom";
 }
@@ -29,7 +29,7 @@ export function shotFigure(shot: Shot): string {
         <span class="bx-shot-badge">Computer ${shot.machine}</span>
         <span class="bx-shot-time">${shot.timestamp}</span>
       </div>
-      <a class="bx-shot-frame${shot.crop ? ` crop-${shot.crop}` : ""}" href="${shot.src}" target="_blank" rel="noopener">
+      <a class="bx-shot-frame${shot.crop ? ` crop-${shot.crop}` : ""} shot-zoom-trigger" href="${shot.src}" target="_blank" rel="noopener" aria-label="View full-size screenshot">
         <img class="bx-shot-img" src="${shot.src}" alt="${shot.alt}" loading="lazy" />
       </a>
       <figcaption class="bx-shot-caption">${shot.caption}</figcaption>
