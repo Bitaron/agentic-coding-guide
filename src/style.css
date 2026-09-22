@@ -2675,6 +2675,10 @@ body.modal-open {
   position: relative;
   max-width: 100%;
   max-height: 100%;
+  /* overflow: auto lets the dialog act as a fixed-size window the
+     scaled-up image scrolls within once zoomed past 100% — see
+     setZoom() in image-modal.ts. */
+  overflow: auto;
   /* Opacity-only fade, no scale/pop — softens the instant full-screen
      swap without reading as decorative motion (see CLAUDE.md). */
   animation: image-modal-in 120ms ease-out;
@@ -2687,12 +2691,18 @@ body.modal-open {
   width: auto;
   height: auto;
   border: 1px solid #3a3733;
+  transform-origin: center center;
+  transition: transform 120ms ease-out;
+  cursor: zoom-in;
 }
 
-.image-modal-close {
-  position: fixed;
-  top: 1.4rem;
-  right: 1.6rem;
+.image-modal.is-zoomed .image-modal-img {
+  cursor: zoom-out;
+}
+
+.image-modal-close,
+.image-modal-zoom-in,
+.image-modal-zoom-out {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -2707,8 +2717,30 @@ body.modal-open {
   justify-content: center;
 }
 
-.image-modal-close:hover {
+.image-modal-close {
+  position: fixed;
+  top: 1.4rem;
+  right: 1.6rem;
+}
+
+.image-modal-controls {
+  position: fixed;
+  top: 1.4rem;
+  right: 4.6rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.image-modal-close:hover,
+.image-modal-zoom-in:hover:not(:disabled),
+.image-modal-zoom-out:hover:not(:disabled) {
   background: #2a2825;
+}
+
+.image-modal-zoom-in:disabled,
+.image-modal-zoom-out:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 @keyframes image-modal-in {
