@@ -2709,10 +2709,13 @@ body.modal-open {
      a zoomed-in image unreachable by scroll. */
   margin: auto;
   display: block;
-  max-width: calc(100vw - 4rem);
-  max-height: calc(100vh - 8rem);
-  width: auto;
-  height: auto;
+  /* Explicit width/height (not max-width/max-height + width/height: auto)
+     so object-fit can scale the image UP to fill the available space too —
+     max-width/max-height alone only ever shrinks an oversized image,
+     leaving a screenshot smaller than the viewport stranded at native size. */
+  width: calc(100vw - 4rem);
+  height: calc(100vh - 8rem);
+  object-fit: contain;
   border: 1px solid #3a3733;
   transform-origin: center center;
   transition: transform 120ms ease-out;
@@ -2720,7 +2723,11 @@ body.modal-open {
 }
 
 .image-modal.is-zoomed .image-modal-img {
-  cursor: zoom-out;
+  cursor: grab;
+}
+
+.image-modal.is-panning .image-modal-img {
+  cursor: grabbing;
 }
 
 .image-modal-close,

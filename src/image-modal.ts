@@ -8,13 +8,17 @@
 // Beyond fit-to-screen, the dialog supports magnifying the screenshot
 // (buttons, +/-/0 keys, or clicking the image) — several of the shots
 // are terminal sessions with small text that fit-to-screen alone can't
-// make legible. Panning past 100% relies on the browser's native
-// scrolling of the transformed image rather than a hand-rolled drag.
+// make legible. Panning past 100% is drag-to-pan on the image itself
+// (mouse/pen only — touch already pans fine via the dialog's native
+// overflow: auto scrolling), on top of the dialog's native scrollbars.
 
 const ZOOM_MIN = 1;
 const ZOOM_MAX = 4;
 const ZOOM_STEP = 0.5;
 const ZOOM_CLICK_LEVEL = 2;
+// Below this, a pointerdown+pointerup is treated as a click (zoom toggle)
+// rather than a drag — keeps a shaky click from being swallowed as a pan.
+const DRAG_THRESHOLD_PX = 4;
 
 let modal: HTMLDivElement;
 let dialog: HTMLDivElement;
@@ -24,6 +28,20 @@ let zoomInButton: HTMLButtonElement;
 let zoomOutButton: HTMLButtonElement;
 let lastFocused: HTMLElement | null = null;
 let zoom = ZOOM_MIN;
+
+interface DragState {
+  pointerId: number;
+  startX: number;
+  startY: number;
+  startScrollLeft: number;
+  startScrollTop: number;
+  moved: boolean;
+}
+let drag: DragState | null = null;
+// Set on pointerup when the gesture was a drag, so the click event that
+// immediately follows (click always fires after pointerup) doesn't also
+// toggle zoom.
+let suppressNextClick = false;
 
 function buildModal(): void {
   modal = document.createElement("div");
@@ -44,6 +62,10 @@ function buildModal(): void {
 
   dialog = modal.querySelector(".image-modal-dialog")!;
   modalImg = modal.querySelector(".image-modal-img")!;
+  // Images are natively draggable — left off, the browser hijacks a
+  // pointerdown+move gesture into an OS-level "drag the image out" after a
+  // few pixels, which cuts our own pan handling off mid-gesture.
+  modalImg.draggable = false;
   closeButton = modal.querySelector(".image-modal-close")!;
   zoomInButton = modal.querySelector(".image-modal-zoom-in")!;
   zoomOutButton = modal.querySelector(".image-modal-zoom-out")!;
@@ -65,9 +87,14 @@ function buildModal(): void {
   zoomInButton.addEventListener("click", zoomIn);
   zoomOutButton.addEventListener("click", zoomOut);
   modalImg.addEventListener("click", () => {
+    if (suppressNextClick) {
+      suppressNextClick = false;
+      return;
+    }
     if (zoom > ZOOM_MIN) resetZoom();
     else setZoom(ZOOM_CLICK_LEVEL);
   });
+  modalImg.addEventListener("pointerdown", onPointerDown);
 
   // The dialog's scrollable area only reflects the image's new painted
   // size once its transform transition has actually finished — reading
@@ -85,6 +112,61 @@ function isOpen(): boolean {
 function centerDialogScroll(): void {
   dialog.scrollLeft = (dialog.scrollWidth - dialog.clientWidth) / 2;
   dialog.scrollTop = (dialog.scrollHeight - dialog.clientHeight) / 2;
+}
+
+function onPointerDown(event: PointerEvent): void {
+  if (
+    drag ||
+    zoom <= ZOOM_MIN ||
+    event.button !== 0 ||
+    event.pointerType === "touch"
+  ) {
+    return;
+  }
+  drag = {
+    pointerId: event.pointerId,
+    startX: event.clientX,
+    startY: event.clientY,
+    startScrollLeft: dialog.scrollLeft,
+    startScrollTop: dialog.scrollTop,
+    moved: false,
+  };
+  modalImg.setPointerCapture(event.pointerId);
+  modalImg.addEventListener("pointermove", onPointerMove);
+  modalImg.addEventListener("pointerup", onPointerUp);
+  modalImg.addEventListener("pointercancel", onPointerUp);
+}
+
+function onPointerMove(event: PointerEvent): void {
+  if (!drag || event.pointerId !== drag.pointerId) return;
+  const dx = event.clientX - drag.startX;
+  const dy = event.clientY - drag.startY;
+  if (!drag.moved && Math.hypot(dx, dy) > DRAG_THRESHOLD_PX) {
+    drag.moved = true;
+    modal.classList.add("is-panning");
+  }
+  if (drag.moved) {
+    dialog.scrollLeft = drag.startScrollLeft - dx;
+    dialog.scrollTop = drag.startScrollTop - dy;
+  }
+}
+
+function onPointerUp(event: PointerEvent): void {
+  if (!drag || event.pointerId !== drag.pointerId) return;
+  if (drag.moved) suppressNextClick = true;
+  cancelDrag();
+}
+
+// Also used to force-clean a drag that never got a pointerup, e.g. the
+// modal is closed (Escape) mid-gesture.
+function cancelDrag(): void {
+  if (!drag) return;
+  modalImg.releasePointerCapture(drag.pointerId);
+  modalImg.removeEventListener("pointermove", onPointerMove);
+  modalImg.removeEventListener("pointerup", onPointerUp);
+  modalImg.removeEventListener("pointercancel", onPointerUp);
+  modal.classList.remove("is-panning");
+  drag = null;
 }
 
 function setZoom(next: number): void {
@@ -128,6 +210,8 @@ function openModal(trigger: HTMLElement): void {
 
 export function closeImageModal(): void {
   if (!isOpen()) return;
+
+  cancelDrag();
 
   // Move focus off the dialog before hiding it from the accessibility
   // tree — otherwise a screen reader briefly sees focus trapped inside
