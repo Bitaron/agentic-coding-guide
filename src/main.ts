@@ -59,6 +59,18 @@ toggle.addEventListener("click", () => {
   );
 });
 
+// On phone widths the expanded nav is a full-screen overlay (see the
+// max-width:640px rule in style.css), so picking a step should close it —
+// on desktop it stays open as a persistent panel, per docs/design-brief.md.
+navSections.addEventListener("click", (event) => {
+  const isStepLink = (event.target as HTMLElement).closest("a[data-route]");
+  if (isStepLink && window.matchMedia("(max-width: 640px)").matches) {
+    shell.classList.remove("expanded");
+    toggle.textContent = "☰";
+    toggle.setAttribute("aria-label", "Expand navigation");
+  }
+});
+
 function link(route: Route, label: string, className: string): string {
   return `<a class="${className}" data-route href="${routePath(route)}">${label}</a>`;
 }

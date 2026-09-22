@@ -185,6 +185,21 @@ code.inline {
   color: #171614;
 }
 
+@media (max-width: 640px) {
+  /* The 300px expanded track otherwise squeezes content into a sliver on
+     phone widths; overlay the nav on top of the content instead. */
+  .shell.expanded {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .shell.expanded .sidebar {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    border-right: none;
+  }
+}
+
 /* ---------- Main content: frame + title-card ---------- */
 
 .main {
