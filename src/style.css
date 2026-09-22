@@ -1456,6 +1456,35 @@ code.inline {
   max-width: 62ch;
 }
 
+.sk-link,
+.spec-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: #cabf9f;
+  text-underline-offset: 0.15em;
+}
+
+.sk-link:hover,
+.spec-link:hover {
+  text-decoration-color: #171614;
+}
+
+.sk-more-lead {
+  font-size: 0.85rem;
+  opacity: 0.65;
+  margin: 0 0 0.4rem;
+  max-width: 62ch;
+}
+
+.sk-more {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  opacity: 0.85;
+  max-width: 62ch;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
 /* ---------- Step: Hooks ---------- */
 
 .hk-intro {
