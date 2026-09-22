@@ -1,6 +1,9 @@
 import "./style.css";
 import { sections, findSection } from "./sections";
 import { onRouteChange, navigate, routePath, type Route } from "./router";
+import { initImageModal, closeImageModal } from "./image-modal";
+
+initImageModal();
 
 const app = document.querySelector<HTMLDivElement>("#app")!;
 
@@ -104,6 +107,7 @@ function renderNav(route: Route): void {
 let activeStepCleanup: (() => void) | undefined;
 
 function renderStep(route: Route): void {
+  closeImageModal();
   activeStepCleanup?.();
   activeStepCleanup = undefined;
 

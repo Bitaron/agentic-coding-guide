@@ -19,7 +19,7 @@ export function shotFigure(shot: Shot): string {
   return `
     <figure class="fx-shot">
       <span class="fx-shot-time">${shot.timestamp}</span>
-      <a class="fx-shot-frame" href="${shot.src}" target="_blank" rel="noopener">
+      <a class="fx-shot-frame shot-zoom-trigger" href="${shot.src}" target="_blank" rel="noopener" aria-label="View full-size screenshot">
         <img class="fx-shot-img" src="${shot.src}" alt="${shot.alt}" loading="lazy" />
       </a>
       <figcaption class="fx-shot-caption">${shot.caption}</figcaption>

@@ -2230,9 +2230,12 @@ code.inline {
 
 .fx-shot-frame {
   display: block;
+  width: 100%;
   overflow: hidden;
   border: 1px solid #e2dacb;
   background: #171614;
+  padding: 0;
+  cursor: zoom-in;
 }
 
 .fx-shot-img {
@@ -2317,9 +2320,12 @@ code.inline {
 
 .bx-shot-frame {
   display: block;
+  width: 100%;
   overflow: hidden;
   border: 1px solid #e2dacb;
   background: #171614;
+  padding: 0;
+  cursor: zoom-in;
 }
 
 .bx-shot-frame.crop-top,
@@ -2607,5 +2613,86 @@ code.inline {
 
   .ex-note:empty {
     display: none;
+  }
+}
+
+/* ---------- Screenshot zoom modal (see src/image-modal.ts) ---------- */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.image-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.image-modal.is-open {
+  display: flex;
+}
+
+.image-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(23, 22, 20, 0.92);
+}
+
+.image-modal-dialog {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  /* Opacity-only fade, no scale/pop — softens the instant full-screen
+     swap without reading as decorative motion (see CLAUDE.md). */
+  animation: image-modal-in 120ms ease-out;
+}
+
+.image-modal-img {
+  display: block;
+  max-width: calc(100vw - 4rem);
+  max-height: calc(100vh - 8rem);
+  width: auto;
+  height: auto;
+  border: 1px solid #3a3733;
+}
+
+.image-modal-close {
+  position: fixed;
+  top: 1.4rem;
+  right: 1.6rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #cabf9f;
+  background: #171614;
+  color: #f7f5f0;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-modal-close:hover {
+  background: #2a2825;
+}
+
+@keyframes image-modal-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .image-modal-dialog {
+    animation: none;
   }
 }
