@@ -19,6 +19,7 @@ import { mount as mountMcp } from "./steps/mcp";
 import { mount as mountSpecification } from "./steps/specification";
 import { mount as mountAdr } from "./steps/adr";
 import { mount as mountTdd } from "./steps/tdd";
+import { mount as mountGuardRails } from "./steps/guard-rails";
 import { mount as mountCodeReview } from "./steps/code-review";
 import { mount as mountFrontendIntro } from "./steps/frontend-intro";
 import { mount as mountFrontendDesignResearch } from "./steps/frontend-design-research";
@@ -172,6 +173,11 @@ export const sections: Section[] = [
         title: "TDD",
         wide: true,
         mount: mountTdd,
+      },
+      {
+        title: "GuardRails",
+        wide: true,
+        mount: mountGuardRails,
       },
       {
         title: "Code review",
